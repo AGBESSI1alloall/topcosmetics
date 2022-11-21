@@ -1,0 +1,241 @@
+body {
+    font-family: Open Sans, dejavusanscondensed, sans-serif;
+    font-size: 8pt;
+}
+
+ms td.blanktotal, .items td.blanktotal {
+    background-color: #FFFFFF;
+    border: 0mm none #000000;
+    border-top: 0.1mm solid #000000;
+    border-right: 0.1mm solid #000000;
+}
+.items td.totals {
+    text-align: right;
+    border: 0.1mm solid #000000;
+}
+
+table.blocList{
+    margin:15px auto 0;
+    border-spacing: 1px;
+    border-collapse: separate;
+    background-color: grey;
+    width:100%;
+}
+table.blocList tr.thd td,
+table.blocList tr.tft td{
+    padding:4px;
+    font-weight:bold;
+    vertical-align:middle;
+}
+table.blocList thead th.rothead,
+table.blocList tfoot th.rotfoot{
+    padding:4px;
+    text-align:center;
+    font-weight:bold;
+    color:#000;
+    border:none;
+    background: 	#dfdfdf ;
+    text-shadow: 0 1px 0 #fff ;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #f6f6f6, to( #e0e0e0))); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #f6f6f6, #e0e0e0 ); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #f6f6f6, #e0e0e0 ); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #f6f6f6, #e0e0e0 ); /* IE10 */
+    background-image:      -o-linear-gradient( #f6f6f6, #e0e0e0 ); /* Opera 11.10+ */
+    background-image:         linear-gradient( #f6f6f6, #e0e0e0 );
+}
+
+table.blocList tr td.rot-start-head,
+table.blocList tr th.rot-start-head{
+    padding:3px 0;
+    text-align:center;
+    font-weight:bold;
+    border: 1px solid 		#456f9a /*{b-bar-border}*/;
+    background: 			#5e87b0 /*{b-bar-background-color}*/;
+    color: 					#fff /*{b-bar-color}*/;
+    font-weight: 400;
+    text-shadow: 0 /*{b-bar-shadow-x}*/ 1px /*{b-bar-shadow-y}*/ 0 /*{b-bar-shadow-radius}*/ #3e6790 /*{b-bar-shadow-color}*/;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #6facd5 /*{b-bar-background-start}*/), to( #497bae /*{b-bar-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #6facd5 /*{b-bar-background-start}*/, #497bae /*{b-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #6facd5 /*{b-bar-background-start}*/, #497bae /*{b-bar-background-end}*/); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #6facd5 /*{b-bar-background-start}*/, #497bae /*{b-bar-background-end}*/); /* IE10 */
+    background-image:      -o-linear-gradient( #6facd5 /*{b-bar-background-start}*/, #497bae /*{b-bar-background-end}*/); /* Opera 11.10+ */
+    background-image:         linear-gradient( #6facd5 /*{b-bar-background-start}*/, #497bae /*{b-bar-background-end}*/);
+} 
+
+table.rot-resume-details{
+    margin:0;
+    width:100%;
+    border: none;
+    border-spacing: 1px;
+    background-color: #bbb;
+} 
+table.rot-resume-details tr td{
+    background-color: none !important ;
+    vertical-align: middle !important;
+}
+table.blocList tr td.rothead{
+    padding:0;
+}
+table.blocList tr td.rotTotal{
+    background-color:#ededed;
+}
+table.blocList tr td,
+table.blocList tr th{
+    padding:3px 10px;
+    background-color: white;
+    vertical-align:top;
+    font-weight:normal;
+}
+table.blocList tr.rothead td,
+table.blocList tr.rothead th,
+table.blocList tr td.rothead{
+    padding : 4px 3px;
+    text-align:center;
+    color:#000;
+    border:none;
+    background: 	#dfdfdf;
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #f6f6f6, to( #e0e0e0))); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #f6f6f6, #e0e0e0 ); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #f6f6f6, #e0e0e0 ); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #f6f6f6, #e0e0e0 ); /* IE10 */
+    background-image:      -o-linear-gradient( #f6f6f6, #e0e0e0 ); /* Opera 11.10+ */
+    background-image:         linear-gradient( #f6f6f6, #e0e0e0 );
+}
+table.blocList tr td > div.wrapper,
+table.blocList tr th > div.wrapper{
+    display: inline-block;
+    text-align: left;
+}
+table.blocList tr span.info{
+    display:inline-block;
+    text-align:left;
+    color:#333;
+    /*width:110px;*/
+    text-align: left;
+}
+table.blocList tr span.info0{
+    display:inline-block;
+    text-align:left;
+    color:#333;
+    /*width:120px;*/
+    text-align: left;
+}
+table.blocList tr span.info2{
+    display:inline-block;
+    text-align:left;
+    color:#333;
+    /*width:25px;*/
+    padding-right:4px;
+    text-align: left;
+}
+table.blocList tr span.info3{
+    display:inline-block;
+    text-align:left;
+    color:#333;
+    /*width:60px;*/
+    text-align: left;
+}
+table.blocList tr span.val{
+    display:inline-block;
+    text-align:left;
+    color:#000;
+}
+table.rot-detail-tab tr td:first-child{
+    vertical-align:middle;
+}
+table.rot-resume-tab{
+    margin:0px auto 20px;
+}
+table.rot-resume-tab tr td{
+    vertical-align:top;
+    width:25%;
+    text-align:center;
+}
+table.rot-resume-tab tfoot tr td a.detailColapse{
+    text-decoration:none;
+    font-weight:normal;
+}
+.detailLink{
+    margin-top:10px;
+}
+.detailLink > div h3 a{
+    border-top-width: 1px;
+}
+.detailLink > div h3 a .ui-btn-inner{
+    font-size:14px;
+    font-weight:400;
+}
+table.rot-resume-tab tr td[colspan="2"]{
+    vertical-align:top;
+    /*width:25%;*/
+    text-align:center;
+}
+
+.at-italic{
+    font-style : italic;
+}
+p.infos, div.at-infos{
+    margin: 0 auto 10px auto;
+    padding: 8px;
+    border-radius:4px; -moz-border-radius:4px; -khtml-border-radius:4px; -webkit-border-radius:4px;
+    text-align:center;
+    font-size: 14px;
+}
+
+p.infos img{ margin: 0 5px 0 0;		height: 18px; vertical-align:middle;}
+p.infos, div.at-infos{
+    border:1px solid #888;
+    background-color:#eee;
+    color:#333;
+    font-weight:400;
+}
+#page-breaker {page-break-before: always;}
+
+//Orther css
+
+table.blocList tbody td.rothead{
+    padding:3px 0;
+    text-align:center;
+    font-weight:400;
+    color:#000;
+    border:none;
+    background: 	#dfdfdf ;
+    text-shadow: 0 1px 0 #fff ;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #f6f6f6, to( #e0e0e0))); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #f6f6f6, #e0e0e0 ); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #f6f6f6, #e0e0e0 ); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #f6f6f6, #e0e0e0 ); /* IE10 */
+    background-image:      -o-linear-gradient( #f6f6f6, #e0e0e0 ); /* Opera 11.10+ */
+    background-image:         linear-gradient( #f6f6f6, #e0e0e0 );
+}
+table.blocList tr td.grey{
+    background-color : #efefef;
+}
+
+table.unit-maintenance td,
+table.unit-maintenance th{
+    padding : 4px 8px;
+
+}
+
+
+
+
+.at-centred{text-align:center}
+.ft-bold {
+    font-weight: bold !important;
+}
+.ft-right {
+    text-align: right !important;
+}
+.ft-center{text-align:center}
+.ft-left {
+    text-align: left !important;
+}
+.ft-italic {
+    font-style: italic !important;
+}
+.ft-light {
+    color: #444;
+}

@@ -1,0 +1,241 @@
+/* ProAfricaTracing 2022-02-07 */
+/* NE PAS MODIFIER CE FICHIER : MODIFEZ LE .less ET UTILISEZ GRUNT pour GENERER CELUI-CI  */
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24 nov. 2020, 08:45:22
+    Author     : DEV-AKAKPO
+*/
+table.dataTable thead tr.ez-filter td {
+  padding: 1px 7px 1px 2px;
+  /*border-top: 1px solid #99d1ff;*/
+  /*border-bottom: 1px solid #99d1ff;*/
+  /*background-color: #e5f3ff;*/
+  /** Multi-Select pour le filtre datatables **/
+}
+table.dataTable thead tr.ez-filter td > input[type='text'],
+table.dataTable thead tr.ez-filter td > select {
+  margin: 1px;
+  width: 100%;
+  border: 1px solid #999;
+  /*border-radius : 4px;*/
+  padding: 2px 0px 2px 2px;
+  font-size: 13px;
+}
+table.dataTable thead tr.ez-filter td > input[type='text']:focus,
+table.dataTable thead tr.ez-filter td > select:focus,
+table.dataTable thead tr.ez-filter td > input[type='text'].focus-on,
+table.dataTable thead tr.ez-filter td > select.focus-on,
+table.dataTable thead tr.ez-filter td > input[type='text'].filter-on,
+table.dataTable thead tr.ez-filter td > select.filter-on {
+  margin: 0px;
+  border: 2px solid #4886b0;
+  /*border-radius : 4px;*/
+}
+table.dataTable thead tr.ez-filter td > input[type='text'].filter-on,
+table.dataTable thead tr.ez-filter td > select.filter-on {
+  border: 2px solid #4886b0;
+}
+table.dataTable thead tr.ez-filter td > input[type='text']:focus {
+  background-color: #e5f3ff;
+}
+table.dataTable thead tr.ez-filter td > select {
+  padding: 1px 0px 1px 2px;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box {
+  position: relative;
+  width: 100%;
+  z-index: 2000;
+  /** Checkbox personnalisé **/
+  /* Hide the browser's default checkbox */
+  /* Create a custom checkbox */
+  /* On mouse-over, add a grey background color */
+  /* When the checkbox is checked, add a blue background */
+  /* Create the checkmark/indicator (hidden when not checked) */
+  /* Show the checkmark when checked */
+  /* Style the checkmark/indicator */
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box.poped .choice-popup {
+  left: 0%;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup {
+  position: absolute;
+  top: 100%;
+  left: -9999px;
+  background-color: #f6f6f6;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .btn-box {
+  display: block;
+  padding: 8px 6px;
+  /*width : 100%;*/
+  text-align: right;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .btn-box .ez-btn {
+  /*display: inline-block;
+                            margin-bottom: 0;
+                            font-weight: 400;
+                            text-align: center;
+                            white-space: nowrap;
+                            vertical-align: middle;
+                            -ms-touch-action: manipulation;
+                            touch-action: manipulation;
+                            cursor: pointer;
+                            background-image: none;
+                            border: 1px solid transparent;
+                            border-top-color: transparent;
+                            border-right-color: transparent;
+                            border-bottom-color: transparent;
+                            border-left-color: transparent;
+                            padding: 2px 10px;*/
+  font-size: 13px;
+  /*
+                            line-height: 1.42857143;
+                            border-radius: 4px;
+                            -webkit-user-select: none;
+                            -moz-user-select: none;
+                            -ms-user-select: none;
+                            user-select: none;
+                            /**
+                            min-width : 80px;
+                            color: #333;
+                            background-color: #efefef;
+                            border-color: #767676;*/
+  /*&:hover{                                
+                                background-color: #e5e5e5;
+                                border-color: #4f4f4f;
+                            }
+                            &:active{                                
+                                background-color: #fff;
+                                border-color: #767676;
+                            }*/
+  /***COPY and PAST Jquery THEME'S .ui-disabled-state CSS code here **/
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .btn-box .ez-btn:disabled {
+  opacity: 0.35;
+  filter: alpha(opacity=35);
+  /* support: IE8 */
+  background-image: none;
+  cursor: default !important;
+  pointer-events: none;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .btn-box .ez-btn:disabled .ui-icon {
+  filter: alpha(opacity=35);
+  /* support: IE8 - See #6059 */
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .wrapper {
+  margin: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  background-color: #fefefe;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .search-box {
+  padding: 8px 0px 0px;
+  text-align: center;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .search-box input[type='text'],
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .search-box input[type='text']:focus,
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .search-box input[type='text']:active {
+  width: 80%;
+  /*border: 1px solid #aaa;*/
+  padding: 2px 0px 2px 2px;
+  /*border-radius: 2px;*/
+  /*padding: 2px 0px 2px 22px;
+                          background-image: url('../images/searchicon.png');
+                           background-position: 3px 3px;
+                           background-size: 16px 16px;
+                           background-repeat: no-repeat;*/
+  font-size: 12px;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .choice-box {
+  padding: 3px 0px 15px 8px;
+  min-width: 250px;
+  height: 120px;
+  overflow-y: auto;
+  font-size: 12px;
+  font-weight: 400;
+  color: #000;
+  text-shadow: none;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .choice-box .choice-list {
+  width: 100%;
+  text-align: left;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .choice-popup .choice-all {
+  padding: 6px 0px 6px 8px;
+  border-top: 1px solid #ccc;
+  font-size: 12px;
+  font-weight: 600;
+  color: #000;
+  text-shadow: none;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .check-label {
+  display: block;
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: normal;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .check-label:focus,
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .check-label:hover {
+  background-color: #f1f9ff;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .check-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .checkmark {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  height: 12px;
+  width: 12px;
+  background-color: #efefef;
+  border: 1px solid #666;
+  border-radius: 3px;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .check-label:hover input ~ .checkmark {
+  background-color: #ddd;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .check-label input:checked ~ .checkmark {
+  background-color: #4596ce;
+  border: 1px solid #4596ce;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .check-label input:checked ~ .checkmark:after {
+  display: block;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .check-label.ft-bold {
+  font-weight: bold;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .check-label.ft-italic {
+  font-style: italic;
+}
+table.dataTable thead tr.ez-filter td .ez-multi-choice-box .ez-checkbox .check-label .checkmark:after {
+  left: 3px;
+  top: 0px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(40deg);
+  -ms-transform: rotate(40deg);
+  transform: rotate(40deg);
+}

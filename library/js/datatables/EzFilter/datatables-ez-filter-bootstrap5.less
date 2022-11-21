@@ -1,0 +1,251 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24 nov. 2020, 08:45:22
+    Author     : DEV-AKAKPO
+*/
+
+
+table.dataTable{
+
+    thead tr.ez-filter {
+        td {             
+            padding: 1px 7px 1px 2px;
+            /*border-top: 1px solid #99d1ff;*/
+            /*border-bottom: 1px solid #99d1ff;*/
+            /*background-color: #e5f3ff;*/
+            > input[type='text'], > select {
+                margin: 1px;
+                width: 100%;
+                /*border: 1px solid #999;
+                border-radius : 4px;
+                padding: 2px 0px 2px 2px;
+                font-size: 13px;*/
+                &:focus, &.focus-on, &.filter-on{
+                    /*margin : 0px;
+                    border: 2px solid #999;
+                    border-radius : 4px;*/
+                }                
+                &.filter-on, &.focus-on{
+                    /* USE OF Bootstrap5's .form-control:focus STYLES */
+                    color: #212529;
+                    background-color: #fff;
+                    border-color: #86b7fe;
+                    outline: 0;
+                    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+                }
+            }
+            > input[type='text']:focus{
+                background-color : #e5f3ff;
+            }
+            > select {
+                /*padding: 1px 0px 1px 2px;*/
+            }
+            /** Multi-Select pour le filtre datatables **/
+            .ez-multi-choice-box {
+                position:relative;
+                width:100%;
+                z-index : 2000;
+                &.poped .choice-popup{
+                    left : 0%;
+                }
+                .choice-popup{
+                    position : absolute;
+                    top : 100%;
+                    left : -9999px;
+                    background-color: #f6f6f6;
+                    border: 1px solid #999;
+                    border-radius : 4px;
+                    .btn-box{                        
+                        display:block;
+                        padding : 8px 6px;
+                        width : 100%;
+                        text-align : right;
+                        .ez-btn {
+                            /*display: inline-block;
+                            margin-bottom: 0;
+                            font-weight: 400;
+                            text-align: center;
+                            white-space: nowrap;
+                            vertical-align: middle;
+                            -ms-touch-action: manipulation;
+                            touch-action: manipulation;
+                            cursor: pointer;
+                            background-image: none;
+                            border: 1px solid transparent;
+                            border-top-color: transparent;
+                            border-right-color: transparent;
+                            border-bottom-color: transparent;
+                            border-left-color: transparent;
+                            padding: 2px 10px;
+                            font-size: 13px;
+                            line-height: 1.42857143;
+                            border-radius: 4px;
+                            -webkit-user-select: none;
+                            -moz-user-select: none;
+                            -ms-user-select: none;
+                            user-select: none;
+                            */
+                            min-width : 80px;
+                            /*color: #333;
+                            background-color: #efefef;
+                            border-color: #767676;*/
+                            &:hover{                                
+                                /*background-color: #e5e5e5;
+                                border-color: #4f4f4f;*/
+                            }
+                            &:active{                                
+                                /*background-color: #fff;
+                                border-color: #767676;*/
+                            }
+                            &:disabled{                                
+                                /*background-color: #eaeaea;
+                                border-color: #b9b9b9;
+                                color : #b9b9b9;
+                                cursor: default;*/
+                            }
+                        }
+                    }
+                    .wrapper {
+                        margin: 8px;
+                        border : 1px solid #aaa;
+                        border-radius : 4px;
+                        background-color: #fefefe;
+                    }
+                    .search-box {
+                        display:block;
+                        padding: 8px 0px 0px;
+                        width : 100%;
+                        text-align : center;
+                        input[type='text'], input[type='text']:focus, input[type='text']:active{
+                            margin:auto;
+                            width: 80%;
+                            /*border: 1px solid #aaa;
+                            padding: 2px 0px 2px 2px;
+                            border-radius: 2px;*/
+                            /*padding: 2px 0px 2px 22px;
+                          background-image: url('../images/searchicon.png');
+                           background-position: 3px 3px;
+                           background-size: 16px 16px;
+                           background-repeat: no-repeat;*/
+                            /*font-size: 12px;*/
+                        }
+                    }
+                    .choice-box{
+                        padding: 3px 0px 15px 8px;
+                        min-width: 250px;
+                        height: 120px;
+                        overflow-y: auto;
+                        font-size: 12px;
+                        font-weight: 400;
+                        color : #000;
+                        text-shadow: none;
+                        .choice-list{
+                            width: 100%;
+                            text-align:left;
+                        }
+                    }
+                    .choice-all{
+                        padding: 6px 0px 6px 8px;
+                        border-top: 1px solid #ccc;
+                        font-size: 12px;
+                        font-weight: 600;
+                        color : #000;
+                        text-shadow: none;
+                    }
+                }
+
+                /** Checkbox personnalisé **/
+                .ez-checkbox .form-check{
+                    margin-bottom : 0px;
+                    min-height: 0px; 
+                    .form-check-label {
+                        display: block;
+                        position: relative;
+                        /*padding-left: 18px;
+                        margin-bottom: 2px;*/
+                        cursor: pointer;
+                        font-size: 12px;
+                        font-weight : normal;
+                        -webkit-user-select: none;
+                        -moz-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
+                        &:focus, &:hover{
+                            background-color: #f1f9ff;
+                        }
+                    }
+                }
+
+                /* Hide the browser's default checkbox *
+                .ez-checkbox .check-label input {
+                    position: absolute;
+                    opacity: 0;
+                    cursor: pointer;
+                    height: 0;
+                    width: 0;
+                }
+
+                /* Create a custom checkbox *
+                .ez-checkbox .checkmark {
+                    position: absolute;
+                    top: 1px;
+                    left: 0;
+                    height: 12px;
+                    width: 12px;
+                    background-color: #efefef;
+                    border : 1px solid #666;
+                    border-radius : 3px;
+                }
+
+                /* On mouse-over, add a grey background color *
+                .ez-checkbox .check-label:hover input ~ .checkmark {
+                    background-color: #ddd;
+                }
+
+                /* When the checkbox is checked, add a blue background *
+                .ez-checkbox .check-label input:checked ~ .checkmark {
+                    background-color: #4596ce;
+                    border : 1px solid #4596ce;
+                }
+
+                /* Create the checkmark/indicator (hidden when not checked) *
+                .ez-checkbox .checkmark:after {
+                    content: "";
+                    position: absolute;
+                    display: none;
+                }
+
+                /* Show the checkmark when checked *
+                .ez-checkbox .check-label input:checked ~ .checkmark:after {
+                    display: block;
+                }
+
+                /* Style the checkmark/indicator */
+                .ez-checkbox .check-label { 
+
+                    &.ft-bold {
+                        font-weight: bold;
+                    }
+                    &.ft-italic {
+                        font-style: italic;
+                    }
+                    /*.checkmark:after {
+                        left: 3px;
+                        top: 0px;
+                        width: 4px;
+                        height: 8px;
+                        border: solid white;
+                        border-width: 0 2px 2px 0;
+                        -webkit-transform: rotate(40deg);
+                        -ms-transform: rotate(40deg);
+                        transform: rotate(40deg);
+                    }*/
+                }
+            }
+        }
+    }
+}

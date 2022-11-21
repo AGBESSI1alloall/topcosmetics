@@ -1,0 +1,6 @@
+{
+    "require": {
+        "lincanbin/php-pdo-mysql-class": "^2.2",
+        "mpdf/mpdf": "^6.1"
+    }
+}
