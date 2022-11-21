@@ -35,22 +35,19 @@ if (!empty($last_file) && $last_file != "index.php") {
 
     $_SESSION['lastpage'] = $last_file;
 
-    if ($_SESSION['lastpage'] != "" && (($lass_dossier == "//var/www/mangadojo.net/htdocs/topcosmetics") || ($lass_dossier == "C:/xampp/htdocs/topcosmetics"))) {
+    if ($_SESSION['lastpage'] != "" && (($lass_dossier == "") || ($lass_dossier == "C:/xampp/htdocs/topcosmetics"))) {
         
         if (isset($_SESSION['data']) && $_SESSION['data'] != NULL) {
             
-            $requet = "SELECT * FROM lien WHERE idUser=?";
-            $result = $DB->query($requet, [$id_util]);
+            $result = Lien::lineLien($id_util);
             $nbr_valid = count($result);
             
             if ($nbr_valid > 0) {
                 if (!in_array($_SESSION['lastpage'], $files_project)) {
-                    $sql = "UPDATE lien SET lien = ? WHERE idUser =?";
-                    $DB->query($sql, [$_SESSION['lastpage'], $id_util]);
+                    Lien::updateLien($_SESSION['lastpage'], $id_util);
                 }
             } else {
-                $sql = "INSERT INTO lien(idUser,lien) VALUES(?,?)";
-                $DB->query($sql, array($id_util, $_SESSION['lastpage']));
+                Lien::insertLien($id_util, $_SESSION['lastpage']);
             }
         }
     }
@@ -60,13 +57,12 @@ $session_espire = 0;
 if (isset($_SESSION['last_login_timestamp']) && $_SESSION['last_login_timestamp'] != NULL) {
     if ((time() - $_SESSION['last_login_timestamp']) > 2000000) {
 
-        $requet = "SELECT idConn FROM connexion WHERE idUser=? ORDER BY idConn DESC LIMIT 1";
-        $result = $DB->query($requet, [$id_util]);
-        $id_conn = $result[0]['idConn'];
-        $count_id = count($id_conn);
+        $result = Connexion::lineConnexion($id_util);
+
+        $count_id = count($result);
         if ($count_id != 0) {
-            $sql = "UPDATE connexion SET dateDeconn = NOW() WHERE idConn = ?";
-            $DB->query($sql, array($id_conn));
+            $id_conn = $result[0]['idConn'];
+            Connexion::updateConnexion($id_conn);
         }
         unset($_SESSION['loggedIN']);
         $session_espire = 1;
