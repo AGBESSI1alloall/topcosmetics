@@ -1,0 +1,9 @@
+Time : 17:52:50
+SQLSTATE[42000]: Syntax error or access violation: 1066 Not unique table/alias: 'user'
+Raw SQL : SELECT * FROM user JOIN user USING(idCptVend) 
+    WHERE nomCptVend=? AND emailUser=? AND pwdUser=? AND etatUser=1 AND etatCptVend=1
+
+Time : 17:52:32
+SQLSTATE[42000]: Syntax error or access violation: 1066 Not unique table/alias: 'user'
+Raw SQL : SELECT * FROM user JOIN user USING(idCptVend) 
+    WHERE nomCptVend=? AND emailUser=? AND pwdUser=? AND etatUser=1 AND etatCptVend=1

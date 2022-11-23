@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 21 nov. 2022 à 18:22
+-- Généré le : mer. 23 nov. 2022 à 18:06
 -- Version du serveur : 10.4.13-MariaDB
 -- Version de PHP : 8.1.10
 
@@ -147,11 +147,18 @@ CREATE TABLE `compte_vendeur` (
   `telCptVend` varchar(15) NOT NULL,
   `emailCptVend` varchar(150) NOT NULL,
   `adresCptVend` text NOT NULL,
-  `identCptVend` varchar(255) NOT NULL,
+  `descCptVend` varchar(255) DEFAULT NULL,
   `dateCreateCptVend` datetime NOT NULL DEFAULT current_timestamp(),
   `dateEditCreateCptVend` datetime NOT NULL DEFAULT current_timestamp(),
   `etatCptVend` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `compte_vendeur`
+--
+
+INSERT INTO `compte_vendeur` (`idCptVend`, `nomCptVend`, `sloganCptVend`, `telCptVend`, `emailCptVend`, `adresCptVend`, `descCptVend`, `dateCreateCptVend`, `dateEditCreateCptVend`, `etatCptVend`) VALUES
+(1, 'All', 'All', '90000000', 'all@gmail.com', 'Lomé Amadawomé', NULL, '2022-11-23 16:21:30', '2022-11-23 16:21:30', 1);
 
 -- --------------------------------------------------------
 
@@ -163,7 +170,7 @@ CREATE TABLE `connexion` (
   `idConn` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
   `dateConn` datetime DEFAULT NULL,
-  `dateDeconn` datetime DEFAULT NULL
+  `dateDeconn` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -205,6 +212,16 @@ CREATE TABLE `menu` (
   `menu` varchar(150) NOT NULL,
   `etatMenu` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `menu`
+--
+
+INSERT INTO `menu` (`idMenu`, `menu`, `etatMenu`) VALUES
+(1, 'Ventes', 1),
+(2, 'Messages', 1),
+(3, 'Utilisateur', 1),
+(4, 'Admin', 1);
 
 -- --------------------------------------------------------
 
@@ -252,6 +269,16 @@ CREATE TABLE `sousmenu` (
   `etatSousMenu` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Déchargement des données de la table `sousmenu`
+--
+
+INSERT INTO `sousmenu` (`idSousMenu`, `idMenu`, `sousMenu`, `fichierSousMenu`, `etatSousMenu`) VALUES
+(1, 1, 'En cours & Traitée', 'ventes.php', 1),
+(2, 1, 'Historiques', 'ventesHistoriques.php', 1),
+(3, 2, 'Utilisateur', 'user.php', 1),
+(4, 3, 'Utilisateurs', 'users.php', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -286,6 +313,13 @@ CREATE TABLE `user` (
   `dateEditUser` datetime NOT NULL DEFAULT current_timestamp(),
   `etatUser` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `user`
+--
+
+INSERT INTO `user` (`idUser`, `idCptVend`, `nomUser`, `prenomUser`, `telUser`, `emailUser`, `typeUser`, `indicUser`, `pwdUser`, `dateCreateUser`, `dateEditUser`, `etatUser`) VALUES
+(1, 1, 'All', 'All', '00000000', 'alladmin@gmail.com', 'developper', '00228', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a8', '2022-11-23 16:26:49', '2022-11-23 16:26:49', 1);
 
 --
 -- Index pour les tables déchargées
@@ -443,7 +477,7 @@ ALTER TABLE `commande`
 -- AUTO_INCREMENT pour la table `compte_vendeur`
 --
 ALTER TABLE `compte_vendeur`
-  MODIFY `idCptVend` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCptVend` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `connexion`
@@ -485,7 +519,7 @@ ALTER TABLE `type_paiement`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

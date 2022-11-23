@@ -1,13 +1,11 @@
 <?php
 if ($typeutilisateur == 'developper' || $typeutilisateur == 'superadmin') {
     
-    $sql = "SELECT sm.*,m.menu FROM sousmenu sm JOIN menu m USING(id_menu) ORDER BY id_menu, id_sousmenu";
-    $result = $DB->query($sql);
+    $result = Menu::listMenu();
     
 } else {
     if (isset($id_util)) {
-        $sql = "SELECT sm.*, m.menu FROM menu_user mu JOIN menu m USING (id_menu) JOIN sousmenu sm USING(id_sousmenu) WHERE id_useradmin=$id_util ORDER BY mu.id_menu, mu.id_sousmenu";
-        $result = $DB->query($sql);
+        $result = Menu::listMenu($id_util);
     }
 }
 
@@ -24,7 +22,7 @@ $listmenu = count($result) ? array_unique(array_column($result, "menu")) : [];
                 foreach ($result as $line) {
                     if ($line['menu'] == $list) {
                         ?>    
-                        <li data-mini="true"><a href="<?= $line['fichier_sousmenu'] ?>"><?= $line['sousmenu'] ?></a></li> 
+                        <li data-mini="true"><a href="<?= $line['fichierSousMenu'] ?>"><?= $line['sousMenu'] ?></a></li>
                         <?php
                     }
                 }

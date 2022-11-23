@@ -1,8 +1,9 @@
 <?php
 include_once 'loader.php';
+//SELECT * FROM user JOIN compte_vendeur USING(idCptVend) WHERE nomCptVend='All' AND emailUser='alladmin@gmail.com' AND pwdUser='8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a8' AND etatUser=1 AND etatCptVend=1
 
+$pass = hash('sha256', "admin");
 if (isset($_SESSION['loginON'])) {
-    //print_r("connecter");
     header('Location:index.php');
     exit();
 }
@@ -11,13 +12,9 @@ if (isset($login)) {
 
     $compte = $comptePHP;
     $email = $emailPHP;
-    $password = $passwordPHP;
-
-    $password = md5($password);
+    $password = hash('sha256', $passwordPHP);
     
-    $sql = "SELECT * FROM user JOIN employe USING(id_employe) JOIN compte cp ON(user.id_compte=cp.id_compte)  WHERE nom_compte='$compte' AND email_employe='$email' AND password_user='$password' AND etat_user=1 AND etat_compte=1";
-    $data = $DB->query($sql);
-    
+    $data = Login::userConnexion($compte, $email, $password);
     $count = count($data);
 
     if ($count != 0) {
@@ -25,12 +22,9 @@ if (isset($login)) {
         $_SESSION['loginON'] = 1;
         $_SESSION['data'] = $data;
         $_SESSION['last_login_timestamp'] = time();
-        $id_user = $data[0]['id_user'];
-        $_SESSION['ouverture'] = uniqueLignFraisOuverture($data[0]['id_compte']);
-        $_SESSION['carnet'] = uniqueLignCarnet($data[0]['id_compte']);
+        $id_user = $data[0]['idUser'];
         //insertion
-        $requet_connexion = "INSERT INTO connexion(id_user,date_connexion,date_deconnexion) VALUES(?,NOW(),NOW())";
-        $requet_connexion = $DB->query($requet_connexion, array($id_user));        
+        Connexion::insertConnexion($id_user);
         exit('oui');
     } else {
         exit('non');
@@ -45,7 +39,7 @@ if (isset($login)) {
         <script src="library/jquery/jquery-1.9.1.js"></script>
         <link rel="stylesheet" type="text/css" href="library/bootstrap/css/bootstrap.min.css" />
         <script type= "text/javascript" src="library/bootstrap/js/bootstrap.min.js"></script>
-        <title>G-Microfinance</title>
+        <title>topcosmetics</title>
     </head>
     <body>
         <div id="content">
@@ -135,25 +129,34 @@ if (isset($login)) {
             background-color: grey;
             //vertical-align: center; margin-top: 150px;*/
             body {
-                background: url('images/orders-images/microfinance4.jpg') no-repeat fixed center center;
+                background: url('images/orders-images/background-topcosmetics.jpg') no-repeat fixed center center;
                 background-size: cover;
                 font-family: Montserrat;
+                width: 100%;
+                height: 100%;
             }
 
             #content {
                 width: 400px;
-                height: auto;
+                height: 40%;
                 margin: 100px auto;
+                margin-top: 25vh;
                 padding: 20px 0px;
                 border-radius: 5px;
-                background-color: #26bcdb;
+                background-color: #00d7fe;
             }
             /*background: url('http://i.imgur.com/fd8Lcso.png') no-repeat;  */
             .logo {
-                width: 250px;
-                height: 100px;
-                background-image:   url("images/orders-images/logo-gmicrofinance.png");
-                margin: auto;
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                /*position: absolute;*/
+                z-index: 3;
+                background-color: #fff;
+                border: 2px solid #ff00b8;
+                background-image:   url("images/orders-images/logo-topcosmetics.png");
+                background-repeat: no-repeat;
+                margin: 0px auto;
             }
 
             .login-block {
@@ -161,13 +164,13 @@ if (isset($login)) {
                 padding: 20px;
                 background: #fff;
                 border-radius: 5px;
-                border-top: 5px solid #ff656c;
-                margin: 20px auto;
+                border-top: 5px solid #ff00b8;
+                margin: 0px auto;
             }
 
             .login-block h1 {
                 text-align: center;
-                color: #000;
+                color: #ff00b8;
                 font-size: 18px;
                 font-weight: bold;
                 text-transform: uppercase;
@@ -244,7 +247,7 @@ if (isset($login)) {
             .login-block button {
                 width: 100%;
                 height: 40px;
-                background: #ff656c;
+                background: #ff00b8;
                 box-sizing: border-box;
                 border-radius: 5px;
                 border: 1px solid #e15960;
