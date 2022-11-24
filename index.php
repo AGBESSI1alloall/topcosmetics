@@ -3,6 +3,7 @@ include_once 'loader.php';
 
 if (!isset($_SESSION['loginON'])) {
     header('Location:login.php');
+    
 }
 
 $result_session = $_SESSION['data'];
@@ -12,11 +13,12 @@ $pseudo = $result_session[0]['emailUser'];
 $lastpage = $_SESSION['lastpage'];
 $accueilpage = Lien::lastLien($id_util);
 
+$_SESSION['test'] = 1;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <title>Topcosmetics</title>
+<head>
+        <title>TopCosmetics</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="library/jquery/jquery-1.9.1.js"></script>
         <link rel="stylesheet" href="library/jqueryMobile/jquery.mobile-1.3.2.min.css" />
@@ -50,7 +52,7 @@ $accueilpage = Lien::lastLien($id_util);
                 <ul data-role="listview" data-theme="c" class="nav-search">
                     <li data-icon="delete"><a href="#" data-icon="delete" data-rel="close"></a></li>
                 </ul>
-                <h3 style="font-weight:bold; text-align: center; margin-top: 15px;"><span style="color:#ff7f08;">TOPCOSMETICS</span></h3>
+                <h3 style="font-weight:bold; text-align: center; margin-top: 25px;"><span style="color:#ff00b8;">TOPCOSMETICS</span></h3>
                 <?php
                 include_once 'menu.php';
                 ?>
@@ -61,7 +63,7 @@ $accueilpage = Lien::lastLien($id_util);
                     <a href="#" data-icon="forward" data-theme='b' data-role="button" data-inline="true" data-mini="true" id="logout">déconnexion</a>
                     <span style='display:inline-block; width:15px'></span>
                 </div>
-                <h1>Utilisateur: <?= $pseudo?></h1>
+                <h1>Utilisateur: <?= $pseudo."(".$typeutilisateur.")"?></h1>
             </div>
             <div data-role="content"  style="margin:0px; padding:0px;">
                 <div id="page-header" class="ui-bar ui-bar-c" style="height:25px;" >
@@ -94,7 +96,7 @@ $accueilpage = Lien::lastLien($id_util);
 </html>
 <style>
     #seul-page .ui-bar-e {
-        background: #fd7e14;
+        background: #ff00b8;
         background-image: none;
         color: #000000;
         font-weight: 600;

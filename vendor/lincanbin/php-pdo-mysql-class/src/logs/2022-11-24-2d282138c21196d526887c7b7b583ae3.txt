@@ -1,0 +1,15 @@
+Time : 09:35:18
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_connexion' in 'field list'
+Raw SQL : SELECT id_connexion FROM connexion WHERE id_user=? ORDER BY id_connexion DESC LIMIT 1
+
+Time : 09:35:16
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_connexion' in 'field list'
+Raw SQL : SELECT id_connexion FROM connexion WHERE id_user=? ORDER BY id_connexion DESC LIMIT 1
+
+Time : 09:35:14
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_connexion' in 'field list'
+Raw SQL : SELECT id_connexion FROM connexion WHERE id_user=? ORDER BY id_connexion DESC LIMIT 1
+
+Time : 09:32:55
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_user' in 'field list'
+Raw SQL : INSERT INTO connexion(id_user,date_connexion,date_deconnexion) VALUES(?,NOW(),NOW())

@@ -48,7 +48,7 @@ function setupDataTables(id, options) {
         "bStateSave": true,
         "sPaginationType": "full_numbers",
         "oLanguage": {
-            "sUrl": site_url +"library/dataTables_1.10/translations/fr.json"
+            "sUrl": "library/dataTables_1.10/translations/fr.json"
         },
         "aLengthMenu": [10 ,20, 40, 60, 80, 100],
         "iDisplayLength": 20,

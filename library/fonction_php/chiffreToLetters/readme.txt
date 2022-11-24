@@ -21,7 +21,7 @@ e;cid&eacute; de m'en confectionner.la classe ChiffreEnLettre en est le r&eacute
 <br />................................................................
 ...C'est moi qui vous remercie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 <br /><a name='conc
-lusion'></a><h2> Conclusion : </h2>
+lusion'></a><h2> Conclusion : </h2>
 <br />apr&egrave;s avoir copier la fichier
  ChiffreEnLettre dans votre dossier contenant vos fichiers faites:
 <br />&lt;?p

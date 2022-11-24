@@ -27,7 +27,7 @@ if (isset($login)) {
         Connexion::insertConnexion($id_user);
         exit('oui');
     } else {
-        exit('non');
+        exit('non'.$password);
     }
 }
 //<?php echo realpath('chemin.php');
@@ -92,14 +92,15 @@ if (isset($login)) {
                                         passwordPHP: password
                                     },
                                     success: function (reponse) {
-                                        if (reponse == "non") {
-                                            $('.log-status').addClass('wrong-entry');
-                                            $('.error').fadeIn(500);
-                                            setTimeout("$('.error').fadeOut(1500);", 3000);
-                                        } else {
+                                        if (reponse == "oui") {
                                             $('.success').fadeIn(500);
                                             setTimeout("$('.success').fadeOut(1500);", 3000);
                                             window.location = 'index.php';
+                                            
+                                        } else {
+                                            $('.log-status').addClass('wrong-entry');
+                                            $('.error').fadeIn(500);
+                                            setTimeout("$('.error').fadeOut(1500);", 3000);
                                         }
                                     },
                                     dataType: 'text'

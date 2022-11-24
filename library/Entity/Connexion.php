@@ -6,7 +6,7 @@ class Connexion extends GeneralClass {
 
     const SQL_LINE_SELECT_CONNEXION = "SELECT idConn FROM ".self::SQL_TABLE_CONNEXION." WHERE idUser=? ORDER BY idConn DESC LIMIT 1";
     const SQL_UPDATE_CONNEXION = "UPDATE ".self::SQL_TABLE_CONNEXION." SET dateDeconn = NOW() WHERE idConn = ?";
-    const SQL_INSERT_CONNEXION ="INSERT INTO ".self::SQL_TABLE_CONNEXION."(id_user,date_connexion,date_deconnexion) VALUES(?,NOW(),NOW())";
+    const SQL_INSERT_CONNEXION ="INSERT INTO ".self::SQL_TABLE_CONNEXION."(idUser,dateConn,dateDeconn) VALUES(?,NOW(),NOW())";
 
     public static function lineConnexion($iduser){
         global $DB;

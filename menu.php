@@ -5,14 +5,14 @@ if ($typeutilisateur == 'developper' || $typeutilisateur == 'superadmin') {
     
 } else {
     if (isset($id_util)) {
-        $result = Menu::listMenu($id_util);
+        $result = Menu::listUserMenu($id_util);
     }
 }
-
 $listmenu = count($result) ? array_unique(array_column($result, "menu")) : [];
 ?>
 <div  data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="true" style="" data-corners="false" id="menu">
     <?php
+    if(count($listmenu))
     foreach ($listmenu as $list) {
         ?> 
         <div data-role="collapsible" data-inset="false">
