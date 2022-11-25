@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 23 nov. 2022 à 18:06
+-- Généré le : ven. 25 nov. 2022 à 17:37
 -- Version du serveur : 10.4.13-MariaDB
 -- Version de PHP : 8.1.10
 
@@ -173,6 +173,26 @@ CREATE TABLE `connexion` (
   `dateDeconn` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Déchargement des données de la table `connexion`
+--
+
+INSERT INTO `connexion` (`idConn`, `idUser`, `dateConn`, `dateDeconn`) VALUES
+(1, 1, '2022-11-24 08:45:17', '2022-11-24 08:45:17'),
+(2, 1, '2022-11-24 08:57:35', '2022-11-24 08:57:35'),
+(3, 1, '2022-11-24 09:03:40', '2022-11-24 09:03:40'),
+(4, 1, '2022-11-24 09:07:44', '2022-11-24 09:07:44'),
+(5, 1, '2022-11-24 09:13:14', '2022-11-24 09:13:14'),
+(6, 1, '2022-11-24 09:18:05', '2022-11-24 09:18:05'),
+(7, 1, '2022-11-24 09:23:15', '2022-11-24 09:23:15'),
+(8, 1, '2022-11-24 09:30:47', '2022-11-24 09:30:47'),
+(9, 1, '2022-11-24 09:38:08', '2022-11-24 09:38:08'),
+(10, 1, '2022-11-24 09:43:11', '2022-11-24 09:43:11'),
+(11, 1, '2022-11-24 09:52:05', '2022-11-24 09:52:05'),
+(12, 1, '2022-11-24 14:45:18', '2022-11-24 14:45:18'),
+(13, 1, '2022-11-25 08:05:17', '2022-11-25 08:05:17'),
+(14, 1, '2022-11-25 10:03:10', '2022-11-25 10:03:10');
+
 -- --------------------------------------------------------
 
 --
@@ -200,6 +220,13 @@ CREATE TABLE `lien` (
   `idUser` int(11) NOT NULL,
   `lien` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `lien`
+--
+
+INSERT INTO `lien` (`idLien`, `idUser`, `lien`) VALUES
+(1, 1, 'users.php');
 
 -- --------------------------------------------------------
 
@@ -235,6 +262,14 @@ CREATE TABLE `menu_user` (
   `idMenu` int(11) NOT NULL,
   `idSousMenu` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `menu_user`
+--
+
+INSERT INTO `menu_user` (`idMenuUser`, `idUser`, `idMenu`, `idSousMenu`) VALUES
+(1, 1, 3, 3),
+(2, 2, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -276,8 +311,8 @@ CREATE TABLE `sousmenu` (
 INSERT INTO `sousmenu` (`idSousMenu`, `idMenu`, `sousMenu`, `fichierSousMenu`, `etatSousMenu`) VALUES
 (1, 1, 'En cours & Traitée', 'ventes.php', 1),
 (2, 1, 'Historiques', 'ventesHistoriques.php', 1),
-(3, 2, 'Utilisateur', 'user.php', 1),
-(4, 3, 'Utilisateurs', 'users.php', 1);
+(3, 3, 'Utilisateur', 'user.php', 1),
+(4, 4, 'Utilisateurs', 'users.php', 1);
 
 -- --------------------------------------------------------
 
@@ -308,7 +343,7 @@ CREATE TABLE `user` (
   `emailUser` varchar(150) NOT NULL,
   `typeUser` varchar(20) NOT NULL,
   `indicUser` varchar(5) DEFAULT NULL,
-  `pwdUser` varchar(50) NOT NULL,
+  `pwdUser` varchar(256) NOT NULL,
   `dateCreateUser` datetime NOT NULL DEFAULT current_timestamp(),
   `dateEditUser` datetime NOT NULL DEFAULT current_timestamp(),
   `etatUser` int(11) NOT NULL DEFAULT 1
@@ -319,7 +354,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`idUser`, `idCptVend`, `nomUser`, `prenomUser`, `telUser`, `emailUser`, `typeUser`, `indicUser`, `pwdUser`, `dateCreateUser`, `dateEditUser`, `etatUser`) VALUES
-(1, 1, 'All', 'All', '00000000', 'alladmin@gmail.com', 'developper', '00228', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a8', '2022-11-23 16:26:49', '2022-11-23 16:26:49', 1);
+(1, 1, 'All', 'All', '00000000', 'alladmin@gmail.com', 'developper', '00228', 'fa956b808c8f8e3b59be14d7d584761e041a8359d58ba7e1829f12605d76203a', '2022-11-23 16:26:49', '2022-11-23 16:26:49', 1),
+(2, 1, 'AGBESSI', 'Yao Christian', '91488327', 'christiano.agbessi@gmail.com', 'utilisateur', NULL, '3f83e9ad5be63bd5bf2fd009fffe6b7dd4066243975bc962edc37459c17e65b9', '2022-11-25 15:08:50', '2022-11-25 15:08:50', 1);
 
 --
 -- Index pour les tables déchargées
@@ -483,7 +519,7 @@ ALTER TABLE `compte_vendeur`
 -- AUTO_INCREMENT pour la table `connexion`
 --
 ALTER TABLE `connexion`
-  MODIFY `idConn` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idConn` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `images_produit`
@@ -495,13 +531,13 @@ ALTER TABLE `images_produit`
 -- AUTO_INCREMENT pour la table `lien`
 --
 ALTER TABLE `lien`
-  MODIFY `idLien` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idLien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `menu_user`
 --
 ALTER TABLE `menu_user`
-  MODIFY `idMenuUser` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMenuUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `produit`
@@ -519,7 +555,7 @@ ALTER TABLE `type_paiement`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

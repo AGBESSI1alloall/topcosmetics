@@ -1,0 +1,9 @@
+Time : 16:54:12
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'RDER BY idUser,idCptVend' at line 2
+Raw SQL : SELECT * FROM user us JOIN compte_vendeur cv USING(idCptVend) 
+    WHERE etatUser=1 RDER BY idUser,idCptVend
+
+Time : 16:54:07
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'RDER BY idUser,idCptVend' at line 2
+Raw SQL : SELECT * FROM user us JOIN compte_vendeur cv USING(idCptVend) 
+    WHERE etatUser=1 RDER BY idUser,idCptVend

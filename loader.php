@@ -20,7 +20,7 @@ $id_util = $_SESSION['data'][0]['idUser'];
 $droit_util = $_SESSION['data'][0]['typeUser'];
 $_SESSION['idUser'] = $id_util;
 $_SESSION['typeUser'] = $droit_util;
-$_SESSION['idCptVend'] = $_SESSION['data'][0]['typeUser'];
+$_SESSION['idCptVend'] = $_SESSION['data'][0]['idCptVend'];
 }
 
 
