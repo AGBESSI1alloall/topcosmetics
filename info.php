@@ -8,6 +8,7 @@ $detail_icon_attr = " data-theme='c' data-rel='dialog' data-role='button' data-i
 $useredit_icon_attr = " data-theme='c' data-rel='dialog' data-role='button' data-icon='at-useredit' data-iconpos='notext' data-mini='true' ";
 $affect_icon_attr = " data-theme='c' data-rel='dialog' data-role='button' data-icon='at-grid' data-iconpos='notext' data-mini='true' ";
 $delete_icon_attr = " data-theme='c' class='delete' data-rel='dialog' data-role='button' data-icon='delete' data-iconpos='notext' data-mini='true' data-inline='true'  ";
+$active_icon_attr = " data-theme='c' class='active' data-rel='dialog' data-role='button' data-icon='check' data-iconpos='notext' data-mini='true' data-inline='true'  ";
 $block_icon_attr = " data-theme='c' class='delete' data-rel='dialog' data-role='button' data-icon='forbidden' data-iconpos='notext' data-mini='true' data-inline='true'  ";
 $red_icon_attr = " data-theme='c' data-role='button' data-iconpos='notext' data-mini='true' ";
 $success_icon_attr = " data-icon='check'  data-theme='c' data-role='button' data-inline='true' data-iconpos='notext' data-mini='true' ";
@@ -169,6 +170,8 @@ function titles($val) {
 $TITLE_PAIEMENT = "Payer la livraison";
 $TITLE_MODIF = 'Modifier';
 $TITLE_DELETE = 'Supprimer';
+$TITLE_ACTIVE = 'Activer';
+$TITLE_DESACTIVE = 'Désactiver';
 $TITLE_BLOCK = 'Bloquer';
 $TITLE_MODIF_PWD = 'Changer le mot de passe';
 $TITLE_MODIF_RIGHTS = 'Modifier les droits';
