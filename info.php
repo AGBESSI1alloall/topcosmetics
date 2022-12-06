@@ -146,7 +146,7 @@ $edit_success_msg = "<p style='color:green; text-align:center; border:1px solid 
 
 $delete_success_msg = "<p style='color:green; text-align:center; border:1px solid red; border-radius:6px;margin:5px 0px;padding:8px 0px;'>"
         . "<a href='#' data-role='button' data-icon='alert' data-iconpos='notext' data-inline='true'></a>" .
-        "Les données sont bien supprimée!<p>";
+        "Les données sont bien supprimées!<p>";
 
 $erreur_doublons = "<p style='color:red; text-align:center; border:1px solid red; border-radius:6px;margin:5px 0px;padding:8px 0px;'>"
         . "<a href='#' data-role='button' data-icon='alert' data-iconpos='notext' data-inline='true'></a>" .

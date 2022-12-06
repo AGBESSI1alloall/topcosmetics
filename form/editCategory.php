@@ -1,30 +1,27 @@
 <?php
 include_once '../loader.php';
 
-if(isset($general) && $general)
-    $file =1;
-else 
-    $file =0;
-//
+
 $response = array('feedback' => "", 'response' => "");
 
 if (isset($submit)) {
-    if (empty($nom_user) || empty($prenom_user) || empty($tel_user) || empty($email_user)) {
+    if (empty($lib_cat)) {
 
         $error = sms_error("Veuillez remplir tous les champs");
 
         $response['feedback'] = $error;
+
     } else {
         
-        if (GeneralClass::checkDoublons($email_user, "user", "emailUser") && $email_user != $old_email_user) {
+        if (GeneralClass::checkDoublons($lib_cat, "categorie_vente", "libCatVent") && $lib_cat != $old_lib_cat) {
 
-            $error = sms_error("Email Existe déja!!!");
+            $error = sms_error("Libelle Existe déja!!!");
 
             $response['feedback'] = $error;
 
         } else {
 
-            User::editUser($nom_user, $prenom_user, $tel_user, $email_user, $id_user);
+            Category::updateCategory($lib_cat, $desc_cat, $id_cat);
 
             $success = $save_success_msg;
             //Pas d'Erreur d'insertion, le script continue
@@ -37,11 +34,12 @@ if (isset($submit)) {
     exit();
 }
 
-$donn_user = User::lineForOneUser($iduser);
+$donn_category = Category::lineCategory($idcatvent);
+
 ?>
 <div data-role="page" id="standard" data-add-back-btn="true">
     <div data-role="header">
-        <h1>Modifier un Utilisateur</h1>
+        <h1>Modifier une Catégorie</h1>
     </div>
     <style>
         .ui-dialog-contain {
@@ -52,25 +50,17 @@ $donn_user = User::lineForOneUser($iduser);
         select{color: #000000;}
     </style>
     <div data-role="content">
-        <form method="post" action="" id="edit_user" style="margin:10px 20px;">
+        <form method="post" action="" id="edit_cat" style="margin:10px 20px;">
 
             <div data-role='fieldcontain' class="formLine60">
-                <input type="hidden" name="id_user" id="id_user" value="<?=$iduser?>"/>
-                <label for='nom_user'>Nom :</label>
-                <input type="text" name="nom_user" id="nom_user" maxlength="150" value="<?=$donn_user['nomUser']?>" class='text ui-corner-tl' data-mini="true" /> 
+                <input type="hidden" name="id_cat" id="id_cat" value="<?=$donn_category['idCatVent']?>"/>
+                <input type="hidden" name="old_lib_cat" id="old_lib_cat" value="<?=$donn_category['libCatVent']?>"/>
+                <label for='lib_cat'>Libelle :</label>
+                <input type="text" name="lib_cat" id="lib_cat" maxlength="150" value="<?=$donn_category['libCatVent']?>" class='text ui-corner-tl' data-mini="true" /> 
             </div> 
             <div data-role='fieldcontain' class="formLine60">
-                <label for='prenom_user'>Prenoms :</label>
-                <input type="text" name="prenom_user" id="prenom_user" maxlength="150" value="<?=$donn_user['prenomUser']?>" class='text ui-corner-tl' data-mini="true" /> 
-            </div> 
-            <div data-role='fieldcontain' class="formLine60">
-                <label for='tel_user'>Tel :</label>
-                <input type="text" name="tel_user" id="tel_user" maxlength="150" value="<?=$donn_user['telUser']?>" class='text ui-corner-tl' data-mini="true" required /> 
-            </div> 
-            <div data-role='fieldcontain' class="formLine60">
-                <label for='email_user'>Email :</label>
-                <input type="hidden" name="old_email_user" id="old_email_user" value="<?=$donn_user['emailUser']?>"/>
-                <input type="text" name="email_user" id="email_user" maxlength="150" value="<?=$donn_user['emailUser']?>" class='text ui-corner-tl' data-mini="true" required /> 
+                <label for='desc_cat'>Description :</label>
+                <textarea name="desc_cat" id="desc_cat"><?=$donn_category['descCatVent']?></textarea> 
             </div>
             <div style="margin-bottom:10px"></div>
             <div class="messageBox" style="height: auto;"></div>
@@ -87,17 +77,11 @@ $donn_user = User::lineForOneUser($iduser);
             </div>
         </form>
         <script type="text/javascript">
-            var file = "<?=$file?>";
             $(function () {
                 //Creation de l'employé
                 $("#butsubmit").on('click', function () {
-                    if(file == "1")
-                        lien = 'users.php';
-                    else
-                        lien = 'user.php';
-
-                    params = $("#edit_user").serialize();
-                    AjaxLoader("editUser.php", params + '&submit=yes', $('#edit_user .messageBox'), '#content', lien);
+                    params = $("#edit_cat").serialize();
+                    AjaxLoader("editCategory.php", params + '&submit=yes', $('#edit_cat .messageBox'), '#content', 'category.php');
                     //
                 });
             });

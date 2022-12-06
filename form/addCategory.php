@@ -1,30 +1,25 @@
 <?php
 include_once '../loader.php';
-
-if(isset($general) && $general)
-    $file =1;
-else 
-    $file =0;
 //
 $response = array('feedback' => "", 'response' => "");
 
 if (isset($submit)) {
-    if (empty($nom_user) || empty($prenom_user) || empty($tel_user) || empty($email_user)) {
+    if (empty($nom_user) || empty($prenom_user) || empty($tel_user) || empty($email_user) || empty($pwd_user)) {
 
         $error = sms_error("Veuillez remplir tous les champs");
 
         $response['feedback'] = $error;
     } else {
         
-        if (GeneralClass::checkDoublons($email_user, "user", "emailUser") && $email_user != $old_email_user) {
+        if (GeneralClass::checkDoublons($email_user, "user", "emailUser")) {
 
             $error = sms_error("Email Existe déja!!!");
 
             $response['feedback'] = $error;
-
         } else {
 
-            User::editUser($nom_user, $prenom_user, $tel_user, $email_user, $id_user);
+            $id_user = User::insertUser($_SESSION['idCptVend'],$nom_user, $prenom_user, $tel_user, $email_user, $pwd_user,'utilisateur');
+            Menu::insertMenuUser($id_user,3,3);
 
             $success = $save_success_msg;
             //Pas d'Erreur d'insertion, le script continue
@@ -37,11 +32,11 @@ if (isset($submit)) {
     exit();
 }
 
-$donn_user = User::lineForOneUser($iduser);
+
 ?>
 <div data-role="page" id="standard" data-add-back-btn="true">
     <div data-role="header">
-        <h1>Modifier un Utilisateur</h1>
+        <h1>Ajouter Catégories</h1>
     </div>
     <style>
         .ui-dialog-contain {
@@ -52,27 +47,31 @@ $donn_user = User::lineForOneUser($iduser);
         select{color: #000000;}
     </style>
     <div data-role="content">
-        <form method="post" action="" id="edit_user" style="margin:10px 20px;">
+        <form method="post" action="" id="add_user" style="margin:10px 20px;">
 
             <div data-role='fieldcontain' class="formLine60">
-                <input type="hidden" name="id_user" id="id_user" value="<?=$iduser?>"/>
                 <label for='nom_user'>Nom :</label>
-                <input type="text" name="nom_user" id="nom_user" maxlength="150" value="<?=$donn_user['nomUser']?>" class='text ui-corner-tl' data-mini="true" /> 
+                <input type="text" name="nom_user" id="nom_user" maxlength="150" value="" class='text ui-corner-tl' data-mini="true" /> 
             </div> 
             <div data-role='fieldcontain' class="formLine60">
                 <label for='prenom_user'>Prenoms :</label>
-                <input type="text" name="prenom_user" id="prenom_user" maxlength="150" value="<?=$donn_user['prenomUser']?>" class='text ui-corner-tl' data-mini="true" /> 
+                <input type="text" name="prenom_user" id="prenom_user" maxlength="150" value="" class='text ui-corner-tl' data-mini="true" /> 
             </div> 
             <div data-role='fieldcontain' class="formLine60">
                 <label for='tel_user'>Tel :</label>
-                <input type="text" name="tel_user" id="tel_user" maxlength="150" value="<?=$donn_user['telUser']?>" class='text ui-corner-tl' data-mini="true" required /> 
+                <input type="text" name="tel_user" id="tel_user" maxlength="150" value="" class='text ui-corner-tl' data-mini="true" required /> 
             </div> 
             <div data-role='fieldcontain' class="formLine60">
                 <label for='email_user'>Email :</label>
-                <input type="hidden" name="old_email_user" id="old_email_user" value="<?=$donn_user['emailUser']?>"/>
-                <input type="text" name="email_user" id="email_user" maxlength="150" value="<?=$donn_user['emailUser']?>" class='text ui-corner-tl' data-mini="true" required /> 
+                <input type="text" name="email_user" id="email_user" maxlength="150" value="" class='text ui-corner-tl' data-mini="true" required /> 
             </div>
+            <div data-role='fieldcontain' class="formLine60">
+                <label for='pwd_user'>Mot de passe :</label>
+                <input type="text" name="pwd_user" id="pwd_user" maxlength="150" value="" class='text ui-corner-tl' data-mini="true" required /> 
+            </div> 
+
             <div style="margin-bottom:10px"></div>
+
             <div class="messageBox" style="height: auto;"></div>
             <div class="twobutton" style="text-align:center">
                 <input id="submit" name="submit" type="hidden" value="Enregistrer" data-mini="true" data-icon="edit" data-theme="b" />
@@ -87,20 +86,15 @@ $donn_user = User::lineForOneUser($iduser);
             </div>
         </form>
         <script type="text/javascript">
-            var file = "<?=$file?>";
             $(function () {
                 //Creation de l'employé
                 $("#butsubmit").on('click', function () {
-                    if(file == "1")
-                        lien = 'users.php';
-                    else
-                        lien = 'user.php';
-
-                    params = $("#edit_user").serialize();
-                    AjaxLoader("editUser.php", params + '&submit=yes', $('#edit_user .messageBox'), '#content', lien);
+                    params = $("#add_user").serialize();
+                    AjaxLoader("addUser.php", params + '&submit=yes', $('#add_user .messageBox'), '#content', 'users.php');
                     //
                 });
             });
         </script>
     </div>
 </div>
+
