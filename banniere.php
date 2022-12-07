@@ -1,35 +1,42 @@
 <?php
 include_once 'loader.php';
 
+//$style_ban = count($liste_banniere) ? "opacity: .5;" : "";
 $response = ['feedback' => "", 'response' => ""];
 
 
 if (isset($submitbanfile)) {
 
-    if (empty($_FILES['uploadSlideFile']['name'])) {
+    $liste_banniere = Banniere::listBanniere($_SESSION['idCptVend']);
+
+    if(count($liste_banniere) && isset($id_ban) && empty($id_ban)){
+        $response['feedback'] = sms_error("Vous avez déjà une Bannière!");
+    }else
+    if (empty($_FILES['uploadBanniereFile']['name'])) {
 
         $response['feedback'] = sms_error("Veuillez selectionner un fichier!");
+
     } else {
 
-        if (is_uploaded_file($_FILES['uploadSlideFile']['tmp_name'])) {
+        if (is_uploaded_file($_FILES['uploadBanniereFile']['tmp_name'])) {
             sleep(1);
 
             $date_du_jour = date("YmdHis");
-            $name = $date_du_jour . '_' . $_FILES['uploadSlideFile']['name'];
+            $name = $date_du_jour . '_' . $_FILES['uploadBanniereFile']['name'];
 
-            $mon_dossier1 = "images/manga_sliders";
-            $mon_dossier2 = "images/manga_sliders";
+            $mon_dossier1 = "images/compte_bannieres";
+            $mon_dossier2 = "images/compte_bannieres";
 
             if (!file_exists($mon_dossier1)) {
                 mkdir($mon_dossier1, 0777, true);
             }
 
-            $source_path = $_FILES['uploadSlideFile']['tmp_name'];
+            $source_path = $_FILES['uploadBanniereFile']['tmp_name'];
 
             $target_path = $mon_dossier1 . '/' . $name;
             $doc_file = $mon_dossier2 . '/' . $name; //substr($target_path, 3);
             $doc_name = $name;
-            $infosfichier = pathinfo($_FILES['uploadSlideFile']['name']);
+            $infosfichier = pathinfo($_FILES['uploadBanniereFile']['name']);
             $doc_ext = $infosfichier['extension'];
 
             $ext = $doc_ext;
@@ -37,19 +44,21 @@ if (isset($submitbanfile)) {
             $lien = $doc_file;
             //Upload images
             if (move_uploaded_file($source_path, $target_path)) {
-                if (isset($id_slider) && !empty($id_slider)) {
 
-                    if (!empty($lien_slider)) {
-                        $lien_file = "$lien_slider";
+                if (isset($id_ban) && !empty($id_ban)) {
+
+                    if (!empty($lien_ban)) {
+                        $lien_file = "$lien_ban";
                         if (is_file($lien_file))
                             unlink($lien_file);
                     }
-                    $editdate = date("Y-m-d H:m:i");
-                    $tit_manga = empty($tit_manga) ? null : $tit_manga;
-                    //Slider::updateSlider($file, $lien, $ext, $editdate, $id_slider, $lien_page, $tit_manga);
+                    
+                    Banniere::updateBanniere($file, $lien, $ext, $id_ban);
+
                 } else {
-                    $tit_manga = empty($tit_manga) ? null : $tit_manga;
-                    //Slider::insertSlider($file, $lien, $ext, $lien_page, $tit_manga);
+
+                    Banniere::insertBanniere($_SESSION['idCptVend'], $file, $lien, $ext);
+
                 }
             }
 
@@ -70,16 +79,16 @@ if (isset($submitbanfile)) {
         <table style="width:100%;">
             <tr>
                 <td style="width:40%; vertical-align: top;">
-                    <h3 class="addtitle" style="text-align: center;">Ajouter un Slider</h3>
-                    <form method="post" name="addslider" id="addslider" enctype="multipart/form-data" style="width:80%; margin: 30px auto;">
+                    <h3 class="addtitle" style="text-align: center;">Ajouter une Banniere</h3>
+                    <form method="post" name="addbanniere" id="addbanniere" enctype="multipart/form-data" style="width:80%; margin: 30px auto;">
                         <p class="lastimage">
 
                         </p>
                         <div data-role='fieldcontain' class="formLine60 readonly">
                             <input type="hidden" name="id_ban" id="id_ban" data-mini="true" value="" />
                             <input type="hidden" name="lien_ban" id="lien_ban" data-mini="true" value="" />
-                            <label for="uploadSlideFile" data-mini='true' class="logo">Photo Slide : </label>
-                            <input type="file" name="uploadSlideFile" id="uploadSlideFile" accept=".jpg, .png, .jpeg" />
+                            <label for="uploadBanniereFile" data-mini='true' class="logo">Photo Bannière : </label>
+                            <input type="file" name="uploadBanniereFile" id="uploadBanniereFile" accept=".jpg, .png, .jpeg" />
                         </div>
                         <div id="progress-wrp" class="cache">
                             <div class="progress-bar"></div>
@@ -176,13 +185,13 @@ if (isset($submitbanfile)) {
     $(document).ready(function() {
 
         //validation des images du voiture
-        $('#addslider').submit(function(event) {
+        $('#addbanniere').submit(function(event) {
             $("#progress-wrp").removeClass('cache');
             $.mobile.loading('show');
-            var fData = new FormData($("#addslider")[0]);
+            var fData = new FormData($("#addbanniere")[0]);
             $.ajax({
                 type: "POST",
-                url: 'slider.php',
+                url: 'banniere.php',
                 data: fData,
                 processData: false,
                 contentType: false,
@@ -190,7 +199,7 @@ if (isset($submitbanfile)) {
                 dataType: "json",
                 beforeSend: function() {
                     $('#uploadSubmit').attr("disabled", "disabled");
-                    $('#addslider').css("opacity", ".5");
+                    $('#addbanniere').css("opacity", ".5");
                 },
                 xhr: function() {
                     //upload Progress
@@ -215,33 +224,34 @@ if (isset($submitbanfile)) {
                     var objet = response;
                     var percent = 0;
                     if (objet.feedback === 0) {
-                        $("#addslider .messageBox").html(objet.response).trigger('create');
+                        $("#addbanniere .messageBox").html(objet.response).trigger('create');
                         setTimeout(function() {
                             $.mobile.loading("hide");
-                            recharge_table_sliders();
-                            $('#addslider .messageBox').html("").trigger("create");
+                            recharge_table_banniere();
+                            $('#addbanniere .messageBox').html("").trigger("create");
                             //$("#createcompte #id_client").html("").trigger("chosen:updated");
-                            $("#addslider #actualiseForm").click();
-                            $("#addslider #uploadSlideFile").val("").trigger("create");
-                            $('#addslider').css("opacity", "");
+                            $("#addbanniere #actualiseForm").click();
+                            $("#addbanniere #uploadBanniereFile").val("").trigger("create");
+                            $('#addbanniere').css("opacity", "");
                             $("#progress-wrp" + " .progress-bar").css("width", +percent + "%");
                             $("#progress-wrp" + " .status").text(percent + "%");
                             $("#progress-wrp").addClass('cache');
                             $("#uploadSubmit").removeAttr("disabled");
                         }, 4000);
-                        $("#id_slider").val("").trigger('create');
-                        $("#lien_slider").val("").trigger('create');
+                        $("#id_ban").val("").trigger('create');
+                        $("#lien_ban").val("").trigger('create');
                         $(".lastimage").html("").trigger('create');
-                        $(".addtitle").html("Ajouter un Slider").trigger('create');
+                        $(".addtitle").html("Ajouter une Banniere").trigger('create');
                     } else {
-                        $("#addslider .messageBox").html(objet.feedback).trigger('create');
-                        $('#addslider').css("opacity", "");
+                        $("#addbanniere .messageBox").html(objet.feedback).trigger('create');
+                        $('#addbanniere').css("opacity", "");
                         $("#progress-wrp" + " .progress-bar").css("width", +percent + "%");
                         $("#progress-wrp" + " .status").text(percent + "%");
                         $("#progress-wrp").addClass('cache');
                         $("#uploadSubmit").removeAttr("disabled");
+                        $.mobile.loading("hide");
                     }
-                    $("#addslider")[0].reset(); //reset form
+                    $("#addbanniere")[0].reset(); //reset form
                     //$(result_output).html(objet); //output response from server
                     //submit_btn.val("Upload").prop("disabled", false);
                 }

@@ -7,6 +7,7 @@ class Banniere extends GeneralClass {
     const SQL_INSERT_BANNIERE = "INSERT INTO ".self::SQL_TABLE_BANNIERE."(idCptVend, nomBanCpt, lienBanCpt, extBanCpt) VALUES(?,?,?,?)";
     const SQL_UPDATE_BANNIERE = "UPDATE ".self::SQL_TABLE_BANNIERE." SET nomBanCpt=?, lienBanCpt=?, extBanCpt=?, dateEditBanCpt=NOW() WHERE idBanCpt=?";
     const SQL_SELECT_BANNIERE = "SELECT * FROM ".self::SQL_TABLE_BANNIERE." bn JOIN ".self::SQL_TABLE_CPT." cpt USING(idCptVend) WHERE idCptVend=?";
+    const SQL_LINE_SELECT_BANNIERE = "SELECT * FROM ".self::SQL_TABLE_BANNIERE." WHERE idBanCpt=?";
     const SQL_DELETE_BANNIERE = "DELETE FROM  ".self::SQL_TABLE_BANNIERE." WHERE idBanCpt=?";
 
     public static function insertBanniere($idCptVend, $nomBanCpt, $lienBanCpt, $extBanCpt){
@@ -31,5 +32,11 @@ class Banniere extends GeneralClass {
         global $DB;
 
         $DB->query(self::SQL_DELETE_BANNIERE, [$idBanCpt]);
+    }
+
+    public static function lineBanniere($idBanCpt){
+        global $DB;
+
+        return $DB->row(self::SQL_LINE_SELECT_BANNIERE, [$idBanCpt]);
     }
 }

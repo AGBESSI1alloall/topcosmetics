@@ -29,8 +29,8 @@ $maw_width = "max-width:150px";
                 <td></td>
                 <td><?= $camera ?></td>
                 <td><?= $title ?></td>
-                <td><a class="editslider" href='#' idban="<?= $line['idBanCpt'] ?>" imgs="<?=$camera?>" lienslider="<?= $line['lienBanCpt'] ?>" <?= $edit_icon_attr ?>><?= $TITLE_MODIF_INFOS ?></a></td>
-                <td><a <?= $style_css ?> href="form/deleteSlider.php?delete=true&idban=<?= $line['idBanCpt'] ?>" <?= $delete_icon_attr ?>><?= $TITLE_DELETE ?></a></td>
+                <td><a class="editbanniere" href='#' idban="<?= $line['idBanCpt'] ?>" imgs="<?=$camera?>" lienban="<?= $line['lienBanCpt'] ?>" <?= $edit_icon_attr ?>><?= $TITLE_MODIF_INFOS ?></a></td>
+                <td><a <?= $style_css ?> href="form/deleteBanniere.php?delete=true&idban=<?= $line['idBanCpt'] ?>" <?= $delete_icon_attr ?>><?= $TITLE_DELETE ?></a></td>
             </tr>
 
         <?php } ?>
@@ -45,26 +45,15 @@ $maw_width = "max-width:150px";
     $(document).ready(function() {
 
         //Gestion modification
-        $(".editslider").on('click', function(event) {
-            var idslider = $(this).attr("idslider");
-            var lienslider = $(this).attr("lienslider");
+        $(".editbanniere").on('click', function(event) {
+            var idban = $(this).attr("idban");
+            var lienban = $(this).attr("lienban");
             var imgs = $(this).attr("imgs");
-            var lien_page = $(this).attr("lienpage");
-            var idmanga = $(this).attr("idmanga");
-            console.log(lien_page);
-            console.log(idmanga);
-            $("#lien_page").val(lien_page);
-            $("#lien_page").selectmenu('refresh');
-            if(lien_page == 1){
-                $("#slid_manga").removeClass('cache');
-                $("#tit_manga").val(idmanga);
-                $("#tit_manga").selectmenu('refresh');
-            }else
-                $("#slid_manga").addClass('cache');
+            
             $(".lastimage").html(imgs).trigger('create');
-            $(".addtitle").html("Modifier ce Slider").trigger('create');
-            $("#id_slider").val(idslider).trigger('create');
-            $("#lien_slider").val(lienslider).trigger('create');
+            $(".addtitle").html("Modifier cette Banniere").trigger('create');
+            $("#id_ban").val(idban).trigger('create');
+            $("#lien_ban").val(lienban).trigger('create');
 
             return false;
         })
