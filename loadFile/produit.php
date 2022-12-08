@@ -1,7 +1,7 @@
 <?php
 include_once '../loader.php';
 
-$listproduit = Produit::listProd($_SESSION['idCptVend']);
+$listproduit = ProduitImages::listProd($_SESSION['idCptVend']);
 
 $idproduit = isset($idproduit) ? $idproduit : 0;
 ?>
@@ -10,7 +10,7 @@ $idproduit = isset($idproduit) ? $idproduit : 0;
     <thead>
         <tr class="th_color">
             <th rowspan="2" style="width: 2%;">#</th>
-            <th rowspan="2" <?= $dt_filter_select ?>>Libelle</th>
+            <th rowspan="2" <?= $dt_filter_select ?>>Nom</th>
             <th rowspan="2" <?= $dt_filter_input ?>>Catégorie</th>
             <th rowspan="2" <?= $dt_filter_input ?>>Description</th>
             <th rowspan="2" <?= $dt_filter_input ?>>Prix Normal</th>
@@ -29,7 +29,7 @@ $idproduit = isset($idproduit) ? $idproduit : 0;
         <?php
         foreach ($listproduit as $line) {
 
-            $nb_prod = Produit::nbImgProd($line['idProd']);
+            $nb_prod = ProduitImages::nbImgProd($line['idProd']);
             //$delete_style = $nb >= 1 && $line['ext_chap'] == 'pdf' ? "style=\"cursor: default; pointer-events: none; text-decoration: none; color: grey;\"" : "";
             //$view_file = $nb < 1 ? "style=\"cursor: default; pointer-events: none; text-decoration: none; color: grey;\"" : "";
 
@@ -38,13 +38,13 @@ $idproduit = isset($idproduit) ? $idproduit : 0;
                 <td></td>
                 <td><?= $line['nomProd'] ?></td>
                 <td><?= $line['libCatVent'] ?></td>
-                <td><?= nl2br($line['descProd'])?></td>
+                <td><?= nl2br($line['descProd']) ?></td>
                 <td><?= $line['prixProd'] ?></td>
                 <td><?= $line['prixPromoProd'] ?></td>
-                <td><?= $line['nbrePlace'] ?></td>
-                <td><a class="viewfiles" href='#' idproduit="<?= $line['idProd'] ?>" <?= $detail_icon_attr ?>><?= $TITLE_INFOS_DETAIL ?></a></td>
-                <td><a href='#' class="affectfile" idproduit="<?= $line['idProd'] ?>" nomproduit="<?= $line['nomProd'] ?>" <?= $affect_icon_attr ?>><?= titles("Affecter des Images") ?></a></td>
-                <td><a class="editproduit" href='#' idproduit="<?= $line['idProd'] ?>" <?= $edit_icon_attr ?>><?= $TITLE_MODIF_INFOS ?></a></td>
+                <td><?= $nb_prod ?></td>
+                <td><a class="viewfiles" href='#' idproduit="<?= $line['idProd'] ?>" nbimg="<?= $nb_prod ?>" <?= $detail_icon_attr ?>><?= $TITLE_INFOS_DETAIL ?></a></td>
+                <td><a href='#' class="affectfile" idproduit="<?= $line['idProd'] ?>" nomproduit="<?= $line['nomProd'] ?>" nbimg="<?= $nb_prod ?>" <?= $affect_icon_attr ?>><?= titles("Affecter des Images") ?></a></td>
+                <td><a class="editproduit" href='#' idproduit="<?= $line['idProd'] ?>" nomprod="<?= $line['nomProd'] ?>" catprod="<?= $line['idCatVent'] ?>" descprod="<?= nl2br($line['descProd']) ?>" prixprod="<?= $line['prixProd'] ?>" prixpromoprod="<?= $line['prixPromoProd'] ?>" <?= $edit_icon_attr ?>><?= $TITLE_MODIF_INFOS ?></a></td>
                 <td><a href="form/deleteProduit.php?delete=true&idproduit=<?= $line['idProd'] ?>" <?= $delete_icon_attr ?>><?= $TITLE_DELETE ?></a></td>
             </tr>
         <?php } ?>
@@ -81,89 +81,57 @@ $idproduit = isset($idproduit) ? $idproduit : 0;
 
         //Affectation des fichiers au chapitre
         $(".affectfile").on('click', function(event) {
-            var idvoiture = "";
-            var idmodele = "";
+            var idproduit = "";
+            var nomproduit = "";
+            var nbimg = "";
 
             if (!$("#contentajoutfile").hasClass('cache')) {
                 $("#contentajoutfile").addClass('cache');
-                idvoiture = "";
-                var idmodele = "";
+                idproduit = "";
+                nomproduit = "";
+                nbimg = "";
                 $('#list_produit_img').empty();
 
             } else {
                 $("#contentajoutfile").removeClass('cache');
-                $("#contentajoutvoit").addClass('cache');
-                idvoiture = $(this).attr("idvoiture");
-                idmodele = $(this).attr("idmodele");
-                recharge_file_produit(idvoiture);
+                $("#contentajoutprod").addClass('cache');
+                idproduit = $(this).attr("idproduit");
+                nomproduit = $(this).attr("nomproduit");
+                nbimg = $(this).attr("nbimg");
+                recharge_file_produit(idproduit);
             }
-            console.log(idvoiture);
-            $("#id_voiture_file").val(idvoiture).trigger('create');
-            $("#libelle_voiture").val(idmodele).trigger('create');
+
+            $("#id_produit_file").val(idproduit).trigger('create');
+            $("#nom_produit").val(nomproduit).trigger('create');
+            $("#nb_prod").val(nbimg).trigger('create');
         });
 
         //Gestion modification
         $(".editproduit").on('click', function(event) {
-            var idvoiture = $(this).attr("idvoiture");
-            $.ajax({
-                type: 'POST',
-                url: 'dynamicSelect.php',
-                data: {
-                    idvoiture: idvoiture
-                },
-                dataType: "json",
-                success: function(response) {
-                    var objet = response;
-                    if (!$("#contentajoutvoit").hasClass('cache')) {
+            var idproduit = $(this).attr("idproduit");
+            var nomproduit = $(this).attr("nomprod");
+            var catproduit = $(this).attr("catprod");
+            var descproduit = $(this).attr("descprod");
+            var prixproduit = $(this).attr("prixprod");
+            var prixpromoproduit = $(this).attr("prixpromoprod");
+            //ouverture du formulaire
+            if (!$("#contentajoutprod").hasClass('cache')) {
 
-                    } else {
-                        $("#contentajoutvoit").removeClass('cache');
-                    }
-                    $("#id_voiture").val(objet.idvoiture).trigger('create');
-                    $("#annee_voit").val(objet.anneevoit).trigger('create');
-                    $("#modele_voit").val(objet.modelevoit).trigger('create');
-                    $("#chassis").val(objet.chassis).trigger('create');
-                    $("#nbr_place").val(objet.nbrplace).trigger('create');
-                    $("#origine_voit").val(objet.originevoit).trigger('create');
-                    $("#type_moteur").val(objet.typemoteur).trigger('create');
-                    $("#marque_voit").val(objet.marquevoit).trigger("chosen:updated");
-                    //$("#id_prio").val(objet.idprio).selectmenu('refresh');
-                    $("#id_prio").val(objet.idprio).trigger("chosen:updated");
-                    $("#garantie_voit").val(objet.garantievoit).trigger('create');
-                    $("#boite_vitesse").val(objet.boitevitesse).selectmenu('refresh');
-                    var type = objet.type;
-                    $("#old_type_action").val(type).trigger('create');
-                    var elem = "#type_action_" + type;
-                    $("[name='type_action']").prop("checked", false).checkboxradio('refresh');
-                    $(elem).prop("checked", true).checkboxradio('refresh');
-                    //$("input[type='radio']").change();
-
-                    if (type == 1) {
-                        $("#locatform1").removeClass('cache');
-                        $("#locatform2").removeClass('cache');
-                        $("#ventform").addClass('cache');
-
-                    } else if (type == 2) {
-                        $("#locatform1").addClass('cache');
-                        $("#locatform2").addClass('cache');
-                        $("#ventform").removeClass('cache');
-                    } else if (type == 3) {
-                        $("#ventform").removeClass('cache');
-                        $("#locatform1").removeClass('cache');
-                        $("#locatform2").removeClass('cache');
-                    }
-
-                    $("#prix_vente").val(objet.prixvente).trigger('create');
-                    $("#garentie_vente").val(objet.garentievente).trigger('create');
-                    $("#prix_locatj").val(objet.prixlocatj).trigger('create');
-                    $("#prix_locath").val(objet.prixlocath).trigger('create');
-                    $("#prix_locatm").val(objet.prixlocatm).trigger('create');
-                    $("#prix_locatt").val(objet.prixlocatt).trigger('create');
-
-                }
-            });
+            } else {
+                $("#addprodfile #actualiseForm").click();
+                $("#contentajoutfile").addClass('cache');
+                $("#contentajoutprod").removeClass('cache');
+            }
+            //Affectation des données au form
+            $("#id_prod").val(idproduit).trigger('create');
+            $("#cat_prod").val(catproduit).trigger('chosen:updated');
+            $("#nom_prod").val(nomproduit).trigger('create');
+            $("#desc_prod").val(descproduit).trigger('create');
+            $("#prix_prod").val(prixproduit).trigger('create');
+            $("#prix_promo_prod").val(prixpromoproduit).trigger('create');
             return false;
         })
+
         //Edit de compte
         produittable = setupDataTables("listproduit", {
             dom: 'Bfrtip',

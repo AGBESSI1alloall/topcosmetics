@@ -1,14 +1,18 @@
 <?php
 include_once '../loader.php';
 
-$listphotovoiture = PhotoVoiture::listPhotoVoiture($idvoiture);
+$listphotoproduit = ProduitImages::listImgProd($idproduit);
 
-$nt_photo = count($listphotovoiture);
+$nt_photo = count($listphotoproduit);
+
 $nb_colums = 8;
+
 $nb_colums = $nt_photo <= $nb_colums ? 4 : $nb_colums;
 
 $maw_width = "max-width:120px";
+$_smiddle = "style='vertical-align:middle; width:24%; text-align:center;'";
 $_middle = $nt_photo <= $nb_colums ? "style='vertical-align:middle; width:24%; text-align:center;'" : "style='vertical-align:middle; width:12%; text-align:center;'";
+
 $message = sms_error('Aucune images pour cette voiture, Merci');
 
 ?>
@@ -26,15 +30,15 @@ $message = sms_error('Aucune images pour cette voiture, Merci');
 
                     for ($j = $i; $j < ($i + $nb_colums); $j++) {
 
-                        if (array_key_exists($j, $listphotovoiture)) {
-                            $camera = empty($listphotovoiture[$j]["lienPhoto"]) ? "" : "<img src='../MobileEzRentalCars/" . $listphotovoiture[$j]["lienPhoto"] . "' style='width:100%;$maw_width'/>";
+                        if (array_key_exists($j, $listphotoproduit)) {
+                            $camera = empty($listphotoproduit[$j]["lienImgProd"]) ? "" : "<img src='" . $listphotoproduit[$j]["lienImgProd"] . "' style='width:100%;$maw_width'/>";
                             
-                            $btn_delete = "<a class='delmg' href='form/deleteFile.php?delete=true&idvoiture={$listphotovoiture[$j]['idVoi']}&iddoc={$listphotovoiture[$j]['idPhoto']}' $delete_icon_attr>$TITLE_DELETE</a>";
+                            $btn_delete = "<a class='delmg' href='form/deleteFile.php?delete=true&idproduit={$listphotoproduit[$j]['idProd']}&iddoc={$listphotoproduit[$j]['idImgProd']}' $delete_icon_attr>$TITLE_DELETE</a>";
 
                 ?>
-                            <td <?= $middle ?>>
+                            <td <?= $_middle ?>>
                                 <div class="mon-image">
-                                    <a href="#" class="list-voit" idVoi="<?= $listphotovoiture[$j]['idPhoto'] ?>"><?= $camera ?></a>
+                                    <a href="#" class="list-voit" idimage="<?= $listphotoproduit[$j]['idImgProd'] ?>"><?= $camera ?></a>
                                     <p><?=$btn_delete?></p>
                                 </div>
                             </td>

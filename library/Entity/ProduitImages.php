@@ -1,6 +1,5 @@
 <?php
-
-class Produit extends GeneralClass {
+class ProduitImages extends GeneralClass{
 
     const SQL_TABLE_PRODUIT = "produit";
     const SQL_TABLE_IMG_PRODUIT = "images_produit";
@@ -10,8 +9,8 @@ class Produit extends GeneralClass {
     //Consernant le produit
     const SQL_INSERT_PROD = "INSERT INTO ".self::SQL_TABLE_PRODUIT."(idCptVend, idCatVent, nomProd, descProd, prixProd, prixPromoProd) VALUES(?,?,?,?,?,?)";
     const SQL_UPDATE_PROD = "UPDATE ".self::SQL_TABLE_PRODUIT." SET idCatVent=?, nomProd=?, descProd=?, prixProd=?, prixPromoProd=?, dateEditProd=NOW() WHERE idProd=?";
-    const SQL_SELECT_ALL_PROD = "SELECT * FROM ".self::SQL_TABLE_PRODUIT." JOIN ".self::SQL_TABLE_CAT_VENT." USING(idCatVent) ORDER BY idProd";
-    const SQL_SELECT_PROD_CPT = "SELECT * FROM ".self::SQL_TABLE_PRODUIT." JOIN ".self::SQL_TABLE_CAT_VENT." USING(idCatVent) WHERE idCptVend=? ORDER BY idProd";
+    const SQL_SELECT_ALL_PROD = "SELECT * FROM ".self::SQL_TABLE_PRODUIT." JOIN ".self::SQL_TABLE_CAT_VENT." USING(idCatVent) WHERE etatProd=1 ORDER BY idProd";
+    const SQL_SELECT_PROD_CPT = "SELECT * FROM ".self::SQL_TABLE_PRODUIT." JOIN ".self::SQL_TABLE_CAT_VENT." USING(idCatVent) WHERE etatProd=1 AND idCptVend=? ORDER BY idProd";
     const SQL_HIDE_PROD =  "UPDATE ".self::SQL_TABLE_PRODUIT." SET etatProd=0 WHERE idProd=?";
     const SQL_DELETE_PROD = "DELETE FROM ".self::SQL_TABLE_PRODUIT." WHERE idProd=?";
     const SQL_CHECK_PROD = "SELECT * FROM ".self::SQL_TABLE_ACHAT." WHERE idProd=?";
@@ -23,7 +22,7 @@ class Produit extends GeneralClass {
     const SQL_DELETE_GRUP_IMG = "DELETE FROM ".self::SQL_TABLE_IMG_PRODUIT." WHERE idProd=?";
     const SQL_SELECT_IMG = "SELECT * FROM ".self::SQL_TABLE_IMG_PRODUIT." WHERE idProd=?";
     const SQL_SELECT_LINE_IMG = "SELECT * FROM ".self::SQL_TABLE_IMG_PRODUIT." WHERE idImgProd=?";
-    const SQL_SELECT_NB_IMG = "SELECT count(idImgProd) FROM ".self::SQL_TABLE_IMG_PRODUIT." WHERE idProd=?";
+    const SQL_SELECT_NB_IMG = "SELECT count(idImgProd) nb FROM ".self::SQL_TABLE_IMG_PRODUIT." WHERE idProd=?";
 
     //Gestion des méthodes
     public static function checkProd($idProd){
@@ -64,10 +63,12 @@ class Produit extends GeneralClass {
     public static function deleteProd($idProd){
         global $DB;
 
-        if(self::checkProd($idProd))
+        if(self::checkProd($idProd)){
             $DB->query(self::SQL_HIDE_PROD, [$idProd]);
-        else
+        }else{
             $DB->query(self::SQL_DELETE_PROD, [$idProd]);
+            self::deleteGrupImgProd($idProd);
+        }    
     }
 
     //Gestion IMG PROD
@@ -105,13 +106,15 @@ class Produit extends GeneralClass {
     public static function lineImgProd($idImgProd){
         global $DB;
 
-        return $DB->query(self::SQL_SELECT_LINE_IMG, [$idImgProd]);
+        return $DB->row(self::SQL_SELECT_LINE_IMG, [$idImgProd]);
     }
 
     public static function nbImgProd($idProd){
         global $DB;
 
-        return $DB->query(self::SQL_SELECT_NB_IMG, [$idProd]);
+        $rest = $DB->row(self::SQL_SELECT_NB_IMG, [$idProd]);
+
+        return $rest['nb'];
     }
 
 }
