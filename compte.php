@@ -23,6 +23,7 @@ else
                         <th rowspan="2" <?= $dt_filter_input ?>>Email</th>
                         <th rowspan="2" <?= $dt_filter_input ?>>Adresse</th>
                         <th rowspan="2" <?= $dt_filter_input ?>>Description</th>
+                        <th rowspan="2" <?= $dt_filter_input ?>>Catégories</th>
                         <th rowspan="2" <?= $dt_filter_select ?>>Etat</th>
                         <th colspan="2" style="width:8%;" >Actions</th>
                     </tr>
@@ -37,11 +38,13 @@ else
 
                         if($line['etatCptVend'] == 1){
                             $etat = "Active";
-                            $lien = "<a $delete_css href=\"form/deleteCompte.php?desactive=true&idcptvend={$line['idCptVend']}\" $delete_icon_attr ?>><?= $TITLE_DESACTIVE ?></a>";
+                            $lien = "<a $delete_css href=\"form/deleteCompte.php?desactive=true&idcptvend={$line['idCptVend']}\" $delete_icon_attr>$TITLE_DESACTIVE</a>";
                         }else{
                             $etat = "Desactive";
-                            $lien = "<a $delete_css href=\"form/deleteCompte.php?active=true&idcptvend={$line['idCptVend']}\" $active_icon_attr ?>><?= $TITLE_ACTIVE ?></a>";
+                            $lien = "<a $delete_css href=\"form/deleteCompte.php?active=true&idcptvend={$line['idCptVend']}\" $active_icon_attr>$TITLE_ACTIVE</a>";
                         }
+
+                        $cat = Compte::listCategorieCompte($line['idCptVend']);
 
                         $delete_css = ($_SESSION['idCptVend'] !=1) ? "style=\"cursor: default; pointer-events: none; text-decoration: none; color: grey;\"" : "";
                         $update_css = ($_SESSION['idCptVend'] ==1 && $line['idCptVend'] != 1) ? "style=\"cursor: default; pointer-events: none; text-decoration: none; color: grey;\"" : "";
@@ -54,6 +57,7 @@ else
                             <td><?= $line['emailCptVend'] ?></td>
                             <td><?= $line['adresCptVend'] ?></td>
                             <td><?= nl2br($line['descCptVend'])  ?></td>
+                            <td><?= $cat ?></td>
                             <td><?= $etat ?></td>
                             <td><a <?= $update_css ?> href='form/editCompte.php?modif=true&general=true&idcptvend=<?= $line['idCptVend'] ?>'  <?= $edit_icon_attr ?>><?= $TITLE_MODIF_INFOS ?></a></td>
                             <td><?=$lien?></td>

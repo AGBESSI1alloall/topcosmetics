@@ -43,7 +43,10 @@ $listmenu = count($result) ? array_unique(array_column($result, "menu")) : [];
     {
         color: white;
     }
-
+    /**Gestion des couleurs des menus*/
+    .ui-collapsible-heading-toggle .ui-btn-inner {
+        background-color: #6c757d !important;
+    }
 </style>
 <script>
     var previewInterval;

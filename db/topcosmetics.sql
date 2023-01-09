@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 25 nov. 2022 à 17:37
+-- Généré le : lun. 09 jan. 2023 à 18:13
 -- Version du serveur : 10.4.13-MariaDB
 -- Version de PHP : 8.1.10
 
@@ -95,6 +95,13 @@ CREATE TABLE `categorie_vente` (
   `etatCatVent` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Déchargement des données de la table `categorie_vente`
+--
+
+INSERT INTO `categorie_vente` (`idCatVent`, `libCatVent`, `descCatVent`, `dateCreateCatVent`, `dateEditCatVent`, `etatCatVent`) VALUES
+(1, 'Parfums', '', '2022-12-06 10:27:28', '2022-12-06 11:13:24', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -128,8 +135,8 @@ CREATE TABLE `commande` (
   `somCom` int(11) NOT NULL,
   `remCom` int(11) NOT NULL,
   `relicatCom` int(11) NOT NULL,
-  `prixLivCom` int(11) NOT NULL,
-  `idTypePaieCom` int(11) NOT NULL,
+  `prixLivCom` int(11) DEFAULT NULL,
+  `idTypePaiem` int(11) NOT NULL DEFAULT 1,
   `etatLivCom` int(11) NOT NULL DEFAULT 1 COMMENT '1:En cours, 2:Traité, 3:Livré',
   `etatCom` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -158,7 +165,7 @@ CREATE TABLE `compte_vendeur` (
 --
 
 INSERT INTO `compte_vendeur` (`idCptVend`, `nomCptVend`, `sloganCptVend`, `telCptVend`, `emailCptVend`, `adresCptVend`, `descCptVend`, `dateCreateCptVend`, `dateEditCreateCptVend`, `etatCptVend`) VALUES
-(1, 'All', 'All', '90000000', 'all@gmail.com', 'Lomé Amadawomé', NULL, '2022-11-23 16:21:30', '2022-11-23 16:21:30', 1);
+(1, 'All', 'Alls', '90000000', 'all@gmail.com', 'Lomé Amadawomé', '', '2022-11-23 16:21:30', '2022-12-02 10:33:17', 1);
 
 -- --------------------------------------------------------
 
@@ -191,7 +198,13 @@ INSERT INTO `connexion` (`idConn`, `idUser`, `dateConn`, `dateDeconn`) VALUES
 (11, 1, '2022-11-24 09:52:05', '2022-11-24 09:52:05'),
 (12, 1, '2022-11-24 14:45:18', '2022-11-24 14:45:18'),
 (13, 1, '2022-11-25 08:05:17', '2022-11-25 08:05:17'),
-(14, 1, '2022-11-25 10:03:10', '2022-11-25 10:03:10');
+(14, 1, '2022-11-25 10:03:10', '2022-11-25 10:03:10'),
+(15, 1, '2022-12-02 08:29:47', '2022-12-02 08:29:47'),
+(16, 1, '2022-12-06 09:31:21', '2022-12-06 09:31:21'),
+(17, 1, '2022-12-07 08:12:19', '2022-12-07 08:12:19'),
+(18, 1, '2022-12-08 07:34:55', '2022-12-08 07:34:55'),
+(19, 1, '2023-01-09 15:12:44', '2023-01-09 15:12:44'),
+(20, 1, '2023-01-09 15:16:33', '2023-01-09 15:16:33');
 
 -- --------------------------------------------------------
 
@@ -226,7 +239,7 @@ CREATE TABLE `lien` (
 --
 
 INSERT INTO `lien` (`idLien`, `idUser`, `lien`) VALUES
-(1, 1, 'users.php');
+(1, 1, 'produits.php');
 
 -- --------------------------------------------------------
 
@@ -282,9 +295,9 @@ CREATE TABLE `produit` (
   `idCptVend` int(11) NOT NULL,
   `idCatVent` int(11) NOT NULL,
   `nomProd` varchar(150) NOT NULL,
-  `descProd` text NOT NULL,
+  `descProd` text DEFAULT NULL,
   `prixProd` int(11) NOT NULL,
-  `prixPromoProd` int(11) NOT NULL,
+  `prixPromoProd` int(11) DEFAULT NULL,
   `dateCreateProd` datetime NOT NULL DEFAULT current_timestamp(),
   `dateEditProd` datetime NOT NULL DEFAULT current_timestamp(),
   `etatProd` int(11) NOT NULL DEFAULT 1
@@ -312,7 +325,11 @@ INSERT INTO `sousmenu` (`idSousMenu`, `idMenu`, `sousMenu`, `fichierSousMenu`, `
 (1, 1, 'En cours & Traitée', 'ventes.php', 1),
 (2, 1, 'Historiques', 'ventesHistoriques.php', 1),
 (3, 3, 'Utilisateur', 'user.php', 1),
-(4, 4, 'Utilisateurs', 'users.php', 1);
+(4, 4, 'Utilisateurs', 'users.php', 1),
+(5, 4, 'Compte', 'compte.php', 1),
+(6, 4, 'Catégories', 'category.php', 1),
+(7, 4, 'Bannière', 'banniere.php', 1),
+(8, 4, 'Produits', 'produits.php', 1);
 
 -- --------------------------------------------------------
 
@@ -327,6 +344,19 @@ CREATE TABLE `type_paiement` (
   `dateCreateTypePaiem` datetime NOT NULL DEFAULT current_timestamp(),
   `dateEditTypePaiem` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `type_paiement`
+--
+
+INSERT INTO `type_paiement` (`idTypePaiem`, `libellePaiem`, `etatPaiem`, `dateCreateTypePaiem`, `dateEditTypePaiem`) VALUES
+(1, 'Payer à la livraison', 1, '2022-12-08 16:25:00', '2022-12-08 16:25:00'),
+(2, 'Tmoney', 1, '2022-12-08 16:25:00', '2022-12-08 16:25:00'),
+(3, 'Flooz', 1, '2022-12-08 16:25:43', '2022-12-08 16:25:43'),
+(4, 'Visa', 1, '2022-12-08 16:25:43', '2022-12-08 16:25:43'),
+(5, 'Ria', 1, '2022-12-08 16:26:18', '2022-12-08 16:26:18'),
+(6, 'Western Union', 1, '2022-12-08 16:26:18', '2022-12-08 16:26:18'),
+(7, 'Moneygram', 1, '2022-12-08 16:26:36', '2022-12-08 16:26:36');
 
 -- --------------------------------------------------------
 
@@ -483,7 +513,7 @@ ALTER TABLE `annulation_commande`
 -- AUTO_INCREMENT pour la table `banniere_compte`
 --
 ALTER TABLE `banniere_compte`
-  MODIFY `idBanCpt` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idBanCpt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `categorie_compte`
@@ -495,7 +525,7 @@ ALTER TABLE `categorie_compte`
 -- AUTO_INCREMENT pour la table `categorie_vente`
 --
 ALTER TABLE `categorie_vente`
-  MODIFY `idCatVent` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCatVent` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `client`
@@ -519,13 +549,13 @@ ALTER TABLE `compte_vendeur`
 -- AUTO_INCREMENT pour la table `connexion`
 --
 ALTER TABLE `connexion`
-  MODIFY `idConn` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idConn` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `images_produit`
 --
 ALTER TABLE `images_produit`
-  MODIFY `idImgProd` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idImgProd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `lien`
@@ -543,13 +573,13 @@ ALTER TABLE `menu_user`
 -- AUTO_INCREMENT pour la table `produit`
 --
 ALTER TABLE `produit`
-  MODIFY `idProd` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idProd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `type_paiement`
 --
 ALTER TABLE `type_paiement`
-  MODIFY `idTypePaiem` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTypePaiem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `user`

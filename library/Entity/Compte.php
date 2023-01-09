@@ -1,6 +1,10 @@
 <?php
 class Compte extends GeneralClass {
     const SQL_TABLE_CV = "compte_vendeur";
+    const SQL_TABLE_CC = "categorie_compte";
+    const SQL_TABLE_CAV = "categorie_vente";
+
+
 
     const SQL_ALL_COMPTE = "SELECT * FROM ".self::SQL_TABLE_CV." ORDER BY idCptVend";
     const SQL_LINE_COMPTE = "SELECT * FROM ".self::SQL_TABLE_CV." WHERE idCptVend=? AND etatCptVend=1";
@@ -8,6 +12,21 @@ class Compte extends GeneralClass {
     descCptVend=?, dateEditCreateCptVend=NOW() WHERE idCptVend=?";
     const SQL_DESACTIVE_COMPTE = "UPDATE ".self::SQL_TABLE_CV." SET etatCptVend=0 WHERE idCptVend=?";
     const SQL_ACTIVE_COMPTE = "UPDATE ".self::SQL_TABLE_CV." SET etatCptVend=1 WHERE idCptVend=?";
+
+    const SQL_CAT_COMPTE = "SELECT * FROM ".self::SQL_TABLE_CAV." JOIN ".self::SQL_TABLE_CC." USING(idCatVent) WHERE idCptVend=?";
+
+    public static function listCategorieCompte($idCptVend){
+        global $DB;
+
+        $result = $DB->query(self::SQL_CAT_COMPTE, [$idCptVend]);
+
+        $result = array_column($result, 'libCatVent');
+
+        $result = count($result)? implode(',', $result) : "Toutes";
+
+        return $result; 
+
+    }
 
     public static function listOfCompte(){
         global $DB;
