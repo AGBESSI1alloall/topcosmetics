@@ -9,14 +9,19 @@ if ($typeutilisateur == 'developper' || $typeutilisateur == 'superadmin') {
     }
 }
 $listmenu = count($result) ? array_unique(array_column($result, "menu")) : [];
+
+//Gestion des commandes de ventes
+$nbcmvent = CommandeAchat::nbCommandeNonLue();
 ?>
-<div  data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="true" style="" data-corners="false" id="menu">
+<div  data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="true" data-corners="false" id="menu">
     <?php
     if(count($listmenu))
     foreach ($listmenu as $list) {
+
+        $vue_com = $list == "Commandes" && $_SESSION['idCptVend'] == 1 ? "<span id='cmdsalervue' style='background-color:#ff00b8; color:white; padding:7px 10px; font-size:10px; border-radius:50%;'>$nbcmvent</span>" : "";
         ?> 
         <div data-role="collapsible" data-inset="false">
-            <h3><?= $list ?></h3>
+            <h3><?= $list." ".$vue_com ?></h3>
             <ul data-role="listview">
                 <?php
                 foreach ($result as $line) {
@@ -227,6 +232,26 @@ $listmenu = count($result) ? array_unique(array_column($result, "menu")) : [];
             /** Enlever le popup calendrier de datepicker s'il ne l'est pas encore**/
             $(".datepick-popup").remove();
         });
+
+        //Gestion de nouvelle commande
+        if (!previewInterval) {
+            previewInterval = setInterval(
+                function() {
+                    $.ajax({
+                        url: 'dynamicSelect.php',
+                        method: 'POST',
+                        data: {
+                            nbcomd: "nbcomd"
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            $("span#cmdsalervue").html(response.commande).trigger('create');
+                        }
+                    });
+                    return false;
+                }, 65000
+            );
+        }
 
     })
 </script>

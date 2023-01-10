@@ -4,10 +4,12 @@ require_once '../loader.php';
 if(isset($desactive) && $desactive){
     $title = "Désactivé un compte";
     $alert = "Voulez vous vraiment désactiver ce Compte?";
+    $btn = "Désactivé";
     $type = 0;
 }else{
     $title = "Activé un compte";
     $alert = "Voulez vous vraiment activer ce Compte?";
+    $btn = "Activé";
     $type = 1;
 }
     
@@ -23,7 +25,7 @@ if (isset($submit)) {
         Compte::activerCompte($id_cpt_vend);
     
     $response['feedback'] = 0;
-    $response['response'] = $delete_success_msg;
+    $response['response'] = sms_success("L'action a été bien effectuée!");
 
     print json_encode($response);
     exit();
@@ -50,7 +52,7 @@ if (isset($submit)) {
             <div class="messageBox" style="height: auto;"></div>
             <div class="twobutton" style="text-align:center">
                 <input id="submit" name="submit" type="hidden" value="Enregistrer" data-mini="true" data-icon="edit" data-theme="b" />
-                <a href="#" id="deletesubmit" data-icon="delete" data-role="button" data-mini="true" data-icon="back" data-theme="b">Supprimer</a>
+                <a href="#" id="deletesubmit" data-icon="delete" data-role="button" data-mini="true" data-icon="back" data-theme="b"><?=$btn?></a>
                 <a href="#" id="cancel" data-rel="back" data-role="button" data-mini="true" data-icon="back" data-theme="a">Annuler</a>
             </div>
             <div class="formLine onebutton" style="display:none; text-align:center">

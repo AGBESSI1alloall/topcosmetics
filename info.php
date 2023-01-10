@@ -168,6 +168,7 @@ function titles($val) {
 }
 
 $TITLE_PAIEMENT = "Payer la livraison";
+$TITLE_CONFIRM_PAIEMENT = "Confirmer le paiement";
 $TITLE_MODIF = 'Modifier';
 $TITLE_DELETE = 'Supprimer';
 $TITLE_ACTIVE = 'Activer';

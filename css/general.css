@@ -338,8 +338,9 @@ div.ui-slider-track {
 }
 
 .th_color {background-color: #ff00b8; color:#fff;}
+.th_orther_color {background-color: #6c757d; color: #fff;}
 
-.th_color th {color:#fff !important;}
+.th_color th, .th_orther_color th {color:#fff !important;}
 
 .ui-mobile-viewport-transitioning, .ui-mobile-viewport-transitioning .ui-page {
     width: 100%;

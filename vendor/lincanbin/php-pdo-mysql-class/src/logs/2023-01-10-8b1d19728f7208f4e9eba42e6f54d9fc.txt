@@ -1,0 +1,16 @@
+Time : 16:10:03
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 2
+Raw SQL : SELECT * FROM commande c JOIN 
+        type_paiement tp USING(idTypePaiem) JOIN client clt USING(idClt) WHERE idCom IN ()
+
+Time : 12:49:16
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'idCptVend' in 'where clause'
+Raw SQL : SELECT SUM(SomTotAchat) somme FROM achat WHERE idCom=? AND idCptVend=?
+
+Time : 12:45:00
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'idCptVend' in 'where clause'
+Raw SQL : SELECT SUM(SomTotAchat) somme FROM achat WHERE idCom=? AND idCptVend=?
+
+Time : 11:55:32
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'idCptVend' in 'from clause'
+Raw SQL : SELECT cv.nomCptVend FROM achat a JOIN compte_vendeur cv USING(idCptVend) WHERE idCom=?

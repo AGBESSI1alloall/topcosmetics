@@ -2,7 +2,7 @@
 include_once 'loader.php';
 
 $password = hash('sha256', 'admin');
-$sql ="UPDATE user SET pwdUser=? WHERE idUser=1";
+$sql ="UPDATE user SET pwdUser=? WHERE idUser=4";
 $DB->query($sql, [$password]);
 
 //8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918

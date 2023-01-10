@@ -12,7 +12,7 @@ require_once 'info.php';
 $DB = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
 
 //Contente de loader
-$files_project = ["login.php","logout.php","loader.php","index.php"];
+$files_project = ["login.php","logout.php","loader.php","index.php","dynamicSelect.php"];
 
 //Val_util
 if(isset($_SESSION['data'])){
